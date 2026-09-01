@@ -1,0 +1,11 @@
+save/
+*.rpgsave
+.fseventsd/
+.Spotlight-V100/
+.DS_Store
+Thumbs.db
+Qsprite Editor/
+node_modules/
+.mcp-backups/
+Liyab.zip
+Liyab.z*
