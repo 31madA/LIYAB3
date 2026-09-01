@@ -1,0 +1,23 @@
+[
+null,
+{"id":1,"atypeId":5,"description":"","etypeId":6,"traits":[{"code":22,"dataId":1,"value":0}],"iconIndex":128,"name":"Shield","note":"","params":[0,0,0,10,0,0,0,0],"price":300},
+{"id":2,"atypeId":1,"description":"","etypeId":3,"traits":[{"code":22,"dataId":1,"value":0}],"iconIndex":130,"name":"Hat","note":"","params":[0,0,0,10,0,0,0,0],"price":300},
+{"id":3,"atypeId":1,"description":"","etypeId":4,"traits":[{"code":22,"dataId":1,"value":0}],"iconIndex":135,"name":"Cloth","note":"","params":[0,0,0,10,0,0,0,0],"price":300},
+{"id":4,"atypeId":1,"description":"","etypeId":5,"traits":[{"code":22,"dataId":1,"value":0}],"iconIndex":145,"name":"Ring","note":"","params":[0,0,0,0,10,0,0,0],"price":300},
+{"id":5,"atypeId":1,"description":"","etypeId":6,"traits":[{"code":22,"dataId":1,"value":0}],"iconIndex":104,"name":"Lefaucheux Model 1863","note":"","params":[0,0,10,0,0,0,0,0],"price":0},
+{"id":6,"atypeId":1,"description":"a neatly kept school Uniform","etypeId":4,"traits":[{"code":22,"dataId":1,"value":0}],"iconIndex":135,"name":"Uniform","note":"","params":[0,0,0,0,0,0,0,0],"price":0},
+{"id":7,"name":"Camisa at Pantalon","description":"Plain camisa and dark trousers, hand-stitched.","iconIndex":128,"note":"","atypeId":7,"etypeId":4,"price":25,"params":[0,0,0,3,0,0,0,0],"traits":[]},
+{"id":8,"name":"Collarless Barong","description":"Rough cloth, worn by a man who works land, not a uniform.","iconIndex":128,"note":"","atypeId":7,"etypeId":4,"price":60,"params":[0,0,0,5,0,0,0,1],"traits":[]},
+{"id":9,"name":"Katipunan Headband","description":"A woven headband worn into battle by rank-and-file Katipuneros.","iconIndex":128,"note":"","atypeId":8,"etypeId":3,"price":80,"params":[0,0,0,2,0,0,2,0],"traits":[]},
+{"id":10,"name":"Reinforced Camisa","description":"A reinforced camisa cut for movement rather than farm work.","iconIndex":128,"note":"","atypeId":8,"etypeId":4,"price":140,"params":[0,0,2,8,0,0,0,0],"traits":[]},
+{"id":11,"name":"Baro't Saya","description":"Hand-woven, slightly too large for the frame it's on.","iconIndex":128,"note":"","atypeId":7,"etypeId":4,"price":30,"params":[0,0,0,2,0,0,2,1],"traits":[]},
+{"id":12,"name":"Soldier's Cotton Shirt","description":"What replaces the baro't saya once Sandra joins Luna's army at Calumpit.","iconIndex":128,"note":"","atypeId":8,"etypeId":4,"price":90,"params":[0,0,0,7,0,0,1,0],"traits":[]},
+{"id":13,"name":"Tiradores' Field Wear","description":"Militia dress worn by the mixed Ilocano infantry and Sharpshooters.","iconIndex":128,"note":"","atypeId":8,"etypeId":4,"price":130,"params":[0,0,1,10,0,0,0,0],"traits":[]},
+{"id":14,"name":"Officer's Jacket","description":"Antonio Luna's uniform — immaculate, even now, even in retreat.","iconIndex":128,"note":"","atypeId":9,"etypeId":4,"price":300,"params":[0,0,0,14,4,0,0,2],"traits":[]},
+{"id":15,"name":"Polished Boots","description":"Polished boots that complete Luna's field dress.","iconIndex":128,"note":"","atypeId":9,"etypeId":5,"price":150,"params":[0,0,0,4,0,0,3,0],"traits":[]},
+{"id":16,"name":"ROTC Uniform","description":"A uniform that almost fits — issued at induction, two weeks before Bataan.","iconIndex":128,"note":"","atypeId":8,"etypeId":4,"price":70,"params":[0,0,1,6,0,0,0,0],"traits":[]},
+{"id":17,"name":"POW Rags","description":"What's left of a uniform after the Death March and Camp O'Donnell.","iconIndex":128,"note":"Force-equipped during the Death March. Cannot be unequipped manually.","atypeId":7,"etypeId":4,"price":0,"params":[0,0,0,1,0,0,0,0],"traits":[{"code":22,"dataId":0,"value":-0.1}]},
+{"id":18,"name":"Guerrilla Fatigues","description":"Rifles, bolos, and improvised gear worn by Pajota's men at Cabanatuan.","iconIndex":128,"note":"","atypeId":8,"etypeId":4,"price":160,"params":[0,0,2,12,0,0,1,0],"traits":[]},
+{"id":19,"name":"Barrio Alias Attire","description":"Plain, deliberately unremarkable clothing — part of moving through the occupation as a ghost.","iconIndex":128,"note":"","atypeId":7,"etypeId":4,"price":100,"params":[0,0,0,4,0,0,3,2],"traits":[]},
+{"id":20,"name":"Anting-Anting","description":"A folk amulet believed to turn aside blade and bullet alike.","iconIndex":128,"note":"HIT -3%. Not sourced from the script — included per design note.","atypeId":7,"etypeId":5,"price":200,"params":[0,0,0,5,0,0,0,4],"traits":[{"code":22,"dataId":8,"value":-0.03}]}
+]

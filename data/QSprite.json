@@ -1,0 +1,507 @@
+{
+  "partymember": {
+    "name": "partymember",
+    "cols": 12,
+    "rows": 8,
+    "anchorX": 0.5,
+    "anchorY": 1,
+    "sampleImg": "C:\\Users\\Admiral Kanzaki\\Documents\\RPGMAKER ASSETS\\48Free\\Male\\%partymember-test.png",
+    "poses": {
+      "idle2": {
+        "name": "idle2",
+        "speed": 15,
+        "adjust": false,
+        "pattern": [
+          48,
+          49,
+          50,
+          51,
+          52,
+          53,
+          54,
+          55,
+          56,
+          57,
+          58,
+          59
+        ]
+      },
+      "idle4": {
+        "name": "idle4",
+        "speed": 15,
+        "adjust": false,
+        "pattern": [
+          60,
+          61,
+          62,
+          63,
+          64,
+          65,
+          66,
+          67,
+          68,
+          69,
+          70,
+          71
+        ]
+      },
+      "idle6": {
+        "name": "idle6",
+        "speed": 15,
+        "adjust": false,
+        "pattern": [
+          72,
+          73,
+          74,
+          75,
+          76,
+          77,
+          78,
+          79,
+          80,
+          81,
+          82,
+          83
+        ]
+      },
+      "idle8": {
+        "name": "idle8",
+        "speed": 15,
+        "adjust": false,
+        "pattern": [
+          84,
+          85,
+          86,
+          87,
+          88,
+          89,
+          90,
+          91,
+          92,
+          93,
+          94,
+          95
+        ]
+      },
+      "move2": {
+        "name": "move2",
+        "speed": 9,
+        "adjust": false,
+        "pattern": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11
+        ]
+      },
+      "move4": {
+        "name": "move4",
+        "speed": 9,
+        "adjust": false,
+        "pattern": [
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21,
+          22,
+          23
+        ]
+      },
+      "move6": {
+        "name": "move6",
+        "speed": 9,
+        "adjust": false,
+        "pattern": [
+          24,
+          25,
+          26,
+          27,
+          28,
+          29,
+          30,
+          31,
+          32,
+          33,
+          34,
+          35
+        ]
+      },
+      "move8": {
+        "name": "move8",
+        "speed": 9,
+        "adjust": false,
+        "pattern": [
+          36,
+          37,
+          38,
+          39,
+          40,
+          41,
+          42,
+          43,
+          44,
+          45,
+          46,
+          47
+        ]
+      }
+    }
+  },
+  "Main": {
+    "name": "Main",
+    "cols": 12,
+    "rows": 12,
+    "anchorX": 0.5,
+    "anchorY": 1,
+    "sampleImg": "C:\\Users\\Admiral Kanzaki\\Documents\\RPGMAKER ASSETS\\Character assets\\spritesheet\\1st MC\\%Main-1stMC_idle.png",
+    "poses": {
+      "idle2": {
+        "name": "idle2",
+        "speed": 16,
+        "adjust": false,
+        "pattern": [
+          0,
+          2,
+          4,
+          6,
+          8,
+          10
+        ]
+      },
+      "idle4": {
+        "name": "idle4",
+        "speed": 16,
+        "adjust": false,
+        "pattern": [
+          12,
+          14,
+          16,
+          18,
+          20,
+          22
+        ]
+      },
+      "idle6": {
+        "name": "idle6",
+        "speed": 16,
+        "adjust": false,
+        "pattern": [
+          24,
+          26,
+          28,
+          30,
+          32,
+          34
+        ]
+      },
+      "idle8": {
+        "name": "idle8",
+        "speed": 16,
+        "adjust": false,
+        "pattern": [
+          36,
+          38,
+          40,
+          42,
+          44,
+          46
+        ]
+      },
+      "move2": {
+        "name": "move2",
+        "speed": 15,
+        "adjust": false,
+        "pattern": [
+          48,
+          50,
+          52,
+          54,
+          56,
+          58
+        ]
+      },
+      "move4": {
+        "name": "move4",
+        "speed": 15,
+        "adjust": false,
+        "pattern": [
+          60,
+          62,
+          64,
+          66,
+          68,
+          70
+        ]
+      },
+      "move6": {
+        "name": "move6",
+        "speed": 15,
+        "adjust": false,
+        "pattern": [
+          72,
+          74,
+          76,
+          78,
+          80,
+          82
+        ]
+      },
+      "move8": {
+        "name": "move8",
+        "speed": 15,
+        "adjust": false,
+        "pattern": [
+          84,
+          86,
+          88,
+          90,
+          92,
+          94
+        ]
+      },
+      "dash2": {
+        "name": "dash2",
+        "speed": 12,
+        "adjust": false,
+        "pattern": [
+          96,
+          98,
+          100,
+          102,
+          104,
+          106
+        ]
+      },
+      "dash4": {
+        "name": "dash4",
+        "speed": 12,
+        "adjust": false,
+        "pattern": [
+          108,
+          110,
+          112,
+          114,
+          116,
+          118
+        ]
+      },
+      "dash6": {
+        "name": "dash6",
+        "speed": 12,
+        "adjust": false,
+        "pattern": [
+          120,
+          122,
+          124,
+          126,
+          128,
+          130
+        ]
+      },
+      "dash8": {
+        "name": "dash8",
+        "speed": 12,
+        "adjust": false,
+        "pattern": [
+          132,
+          134,
+          136,
+          138,
+          140,
+          142
+        ]
+      }
+    }
+  },
+  "npc": {
+    "name": "npc",
+    "cols": 12,
+    "rows": 4,
+    "anchorX": 0.5,
+    "anchorY": 1,
+    "sampleImg": "C:\\Users\\Admiral Kanzaki\\Documents\\Project2\\img\\characters\\%npc-commonerman1.png",
+    "poses": {
+      "idle2": {
+        "name": "idle2",
+        "speed": 17,
+        "adjust": false,
+        "pattern": [
+          4,
+          0,
+          2,
+          4,
+          6,
+          8,
+          10
+        ]
+      },
+      "idle4": {
+        "name": "idle4",
+        "speed": 17,
+        "adjust": false,
+        "pattern": [
+          12,
+          14,
+          16,
+          18,
+          20,
+          22
+        ]
+      },
+      "idle6": {
+        "name": "idle6",
+        "speed": 17,
+        "adjust": false,
+        "pattern": [
+          24,
+          26,
+          28,
+          30,
+          32,
+          34
+        ]
+      },
+      "idle8": {
+        "name": "idle8",
+        "speed": 17,
+        "adjust": false,
+        "pattern": [
+          36,
+          38,
+          40,
+          42,
+          44,
+          46
+        ]
+      }
+    }
+  },
+  "pop": {
+    "name": "pop",
+    "cols": 12,
+    "rows": 8,
+    "anchorX": 0.5,
+    "anchorY": 1,
+    "sampleImg": "C:\\Users\\Admiral Kanzaki\\Documents\\Project2\\img\\characters\\%pop-_commonerman_4.png",
+    "poses": {
+      "idle2": {
+        "name": "idle2",
+        "speed": 20,
+        "adjust": false,
+        "pattern": [
+          0,
+          2,
+          4,
+          6,
+          8,
+          10
+        ]
+      },
+      "idle4": {
+        "name": "idle4",
+        "speed": 20,
+        "adjust": false,
+        "pattern": [
+          12,
+          14,
+          16,
+          18,
+          20,
+          22
+        ]
+      },
+      "idle6": {
+        "name": "idle6",
+        "speed": 20,
+        "adjust": false,
+        "pattern": [
+          24,
+          26,
+          28,
+          30,
+          32,
+          34
+        ]
+      },
+      "idle8": {
+        "name": "idle8",
+        "speed": 20,
+        "adjust": false,
+        "pattern": [
+          36,
+          38,
+          40,
+          42,
+          44,
+          46
+        ]
+      },
+      "move2": {
+        "name": "move2",
+        "speed": 14,
+        "adjust": false,
+        "pattern": [
+          48,
+          50,
+          52,
+          54,
+          56,
+          58
+        ]
+      },
+      "move4": {
+        "name": "move4",
+        "speed": 14,
+        "adjust": false,
+        "pattern": [
+          60,
+          62,
+          64,
+          66,
+          68,
+          70
+        ]
+      },
+      "move6": {
+        "name": "move6",
+        "speed": 14,
+        "adjust": false,
+        "pattern": [
+          72,
+          74,
+          76,
+          78,
+          80,
+          82
+        ]
+      },
+      "move8": {
+        "name": "move8",
+        "speed": 14,
+        "adjust": false,
+        "pattern": [
+          84,
+          86,
+          88,
+          90,
+          92,
+          94
+        ]
+      }
+    }
+  }
+}
