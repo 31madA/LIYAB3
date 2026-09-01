@@ -1,0 +1,113 @@
+
+.card {
+    margin-top: 1rem;
+}
+
+.custom-code {
+    font-family: monospace;
+    border-radius: 0.5rem;
+    background-color: #1e1e1e;
+    color: #fafafa;
+    border: 1px solid #333;
+    overflow-x: auto;
+}
+
+span.custom-code {
+    padding: 0.4rem;
+}
+
+div.custom-code {
+    padding: 1rem;
+    width: fit-content;
+}
+
+ul.custom-code {
+    padding: 1rem;
+    padding-left: 2rem;
+    width: fit-content;
+}
+
+.custom-code p,
+.custom-code pre {
+    margin: 0;
+}
+
+
+.info {
+    color: #888888 !important;
+}
+
+td.info {
+    font-style: italic;
+}
+
+.rotate-45 {
+    transform: rotate(45deg);
+    display: inline-block;
+}
+
+.rotate-90 {
+    transform: rotate(90deg);
+    display: inline-block;
+}
+
+.rotate-135 {
+    transform: rotate(135deg);
+    display: inline-block;
+}
+
+.rotate-180 {
+    transform: rotate(180deg);
+    display: inline-block;
+}
+
+.rotate-270 {
+    transform: rotate(270deg);
+    display: inline-block;
+}
+
+.bi-arrow-90deg-left {
+    transform: rotate(180deg) translateY(5px);
+}
+
+.arrow {
+    transition: transform 0.3s ease;
+    display: inline-block;
+}
+
+.collapsed .arrow {
+    transform: rotate(180deg);
+}
+
+select.form-select {
+    width: max-content;
+}
+
+.title.badge.lite {
+    border: #888888 1px solid;
+    font-style: italic;
+    font-weight: lighter;
+}
+
+.title.badge.pro {
+    color: black;
+    --border: #F0E68C 1px solid;
+    border-radius: 10px;
+    background-color: #B8860B;
+    --font-weight: normal;
+}
+
+.locked {
+    border: #FFC107 1px solid;
+    border-radius: 0.5rem;
+    font-style: italic;
+    font-weight: lighter;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    margin-left: 1rem;
+    margin-right: 1rem;
+}
+
+.mt-xl {
+    margin-top: 4rem;
+}

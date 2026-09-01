@@ -1,0 +1,3241 @@
+<head>
+<!-- jQuery library -->
+<script src="jQuery.js"></script>
+
+<!-- local CSS and JS -->
+<link rel="stylesheet" href="index.css" />
+<script src="common.js"></script>
+<script src="index.js"></script>
+
+<!-- Bootstrap 5.3 -->
+<link href="bootstrap.min.css" rel="stylesheet" />
+<script src="bootstrap.bundle.min.js"></script>
+
+<!-- Bootstrap Icons -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
+</head>
+
+<body data-bs-theme="dark">
+<div>
+<div class="card">
+<h1 class="card-header d-flex justify-content-between">
+Main Menu Scene
+<span class="badge bg-primary mz">MZ</span>
+<span class="badge bg-success mv">MV</span>
+</h1>
+<div class="card-body">
+<div class="alert alert-success mb-2" id="newVersionAvailableBox" style="display: none;">
+<div class="row justify-content-space-between align-items-center">
+<p class="col mb-0" id="newVersionAvailableMessage">
+A new version of this Plugin is available!
+</p>
+<div class="col col-auto">
+<a class="btn btn-outline-light" id="newVersionAvailableLink"
+href="https://aerosys.itch.io/custom-ui" target="_blank">
+Download
+</a>
+</div>
+</div>
+</div>
+<div class="row align-items-stretch mb-4" id="newsBoxContainer">
+<div class="col d-flex">
+<div class="card justify-content-space-between flex-fill" id="newsBox">
+<div class="card-body row align-items-center">
+<p class="col mb-0" id="newsMessage">
+Fetching latest news...
+</p>
+<div class="col col-auto">
+<a class="btn btn-outline-light" id="newsLink"
+href="https://itch.io/c/5769353/rpg-maker-wysiwyg-menu-editors" target="_blank">
+Visit Itch.io
+</a>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="alert alert-warning mb-4" id="requiredCoreScriptVersionWarningBox" style="display: none;">
+<p>
+<i class="bi bi-exclamation-triangle me-2"></i>
+This plugin is designed to work with RPG Maker Core Scripts version
+<strong><span id="requiredCoreScriptVersion"></span></strong>
+or newer.
+</p>
+<p class="mb-0">
+Mind updating your Core Scripts.
+In RPG Maker, please go to 'Game' -> 'Update Core Scripts'.
+</p>
+</div>
+
+<div class="card">
+<h2 class="card-header d-flex justify-content-between collapsed" data-bs-toggle="collapse"
+data-bs-target="#templates">
+Quick Templates
+<button class="btn btn-outline-secondary">
+<i class="bi bi-chevron-up arrow"></i>
+</button>
+</h2>
+<div class="card-body collapse" id="templates">
+<div class="d-flex mb-4">
+<div class="me-4">
+<select class="form-select" id="quicktemplate">
+<option value="rows">Rows</option>
+<option value="columns">Columns</option>
+<option value="singleActor">Single Actor</option>
+<option value="noStatus">No Status Window</option>
+<option value="retro">Retro</option>
+</select>
+</div>
+<div>
+<button type="button" class="btn btn-outline-success"
+onclick="onQuickTemplate(quicktemplate.value)">
+Apply
+</button>
+</div>
+</div>
+<p class="info">
+<span class="bi bi-info-square me-1"></span>
+By clicking on Apply, a Quick Template overrides all individualization that you have already
+done.
+There's no undo button.
+</p>
+</div>
+</div>
+
+<h4 class="mt-xl">Global Settings</h4>
+<div class="card">
+<h2 class="card-header d-flex justify-content-between collapsed" data-bs-toggle="collapse"
+data-bs-target="#touchUI">
+Touch UI
+<button class="btn btn-outline-secondary">
+<i class="bi bi-chevron-up arrow"></i>
+</button>
+</h2>
+<div class="card-body collapse" id="touchUI">
+<div class="alert alert-warning mv">
+This section is only available in RPG Maker MZ.
+</div>
+<div class="mz">
+<label class="form-label">Show?</label>
+<select class="form-select mb-4" id="showTouchUIMode"
+onchange="changeText(this.id, this.value)">
+<option value="always">Yes (Default)</option>
+<option value="onMobile">When on mobile</option>
+<option value="never">No Touch UI</option>
+</select>
+<ul class="info mb-4">
+<li>
+When Touch UI is on, the player can still decide to disable it in the Game's Options
+menu.
+</li>
+<li>
+When Touch UI is off, then "Show Touch UI" is also removed from the Game's Option
+menu.
+</li>
+<li>
+When set to "When on mobile" then this Plugin calls an RPG Maker core code function
+to
+check whether the player is using a mobile device.
+This Plugin does not guarantee this check's reliability.
+</li>
+</ul>
+<hr>
+<div id="touchUIBox1">
+<label class="form-check form-switch mb-4">
+<input class="form-check-input" type="checkbox" id="keepTouchUISpace"
+onchange="changeBoolean(this.id, this.checked)" />
+<span class="form-check label">Keep Touch UI Space?</span>
+</label>
+<p class="info mb-4">
+Tip: You may want to enable this checkbox when you selected "Show Touch UI when on
+mobile"
+so you don't end up with 2 slightly different window sizes.
+</p>
+</div>
+<div id="touchUIBox2">
+<label class="form-label">Touch UI Area Height</label>
+<input class="form-control" type="number" style="width: 6rem" min="0" placeholder="52"
+id="touchUIAreaHeight" onblur="changeNumber(this.id, this.value)">
+</div>
+</div>
+</div>
+</div>
+
+<div class="card">
+<h2 class="card-header d-flex justify-content-between collapsed" data-bs-toggle="collapse"
+data-bs-target="#windows">
+Windows General
+<button class="btn btn-outline-secondary">
+<i class="bi bi-chevron-up arrow"></i>
+</button>
+</h2>
+<div class="card-body collapse" id="windows">
+<p class="info">
+<span class="bi bi-info-square me-1"></span>
+Settings will affect all Windows across all Scenes.
+</p>
+<div class="alert alert-warning mv">
+Some settings may not fully support RPG Maker MV.
+</div>
+<hr />
+
+<div class="row mz mb-4">
+<div class="col">
+<label class="form-label">Item Background</label>
+<select class="form-select" id="windowItemBackgroundType"
+onchange="onWindowItemBackgroundTypeChange(this.value)">
+<option value="dimmed">RPG Maker Default</option>
+<option value="image">Image</option>
+<option value="none">None</option>
+</select>
+</div>
+<div class="col">
+<div id="windowItemBackgroundFileBox">
+<input class="form-control" type="file" id="windowItemBackgroundFile"
+accept="image/png" onchange="changeFile(this.id, 'img', this.value)" />
+<p class="info mb-0">
+File must be located in your game directory/img
+</p>
+</div>
+</div>
+</div>
+
+<div class="input-group mb-2">
+<span class="input-group-text" style="width: 200px">
+<i class="bi bi-transparency me-2"></i>Opacity
+</span>
+<input class="form-control" style="flex-grow: 0; flex-basis: 5rem" type="number"
+id="windowOpacity" onblur="changeNumber(this.id, this.value)" placeholder="192" />
+</div>
+<div class="input-group mb-2">
+<span class="input-group-text" style="width: 200px">
+<i class="bi bi-square me-2"></i>Padding
+</span>
+<input class="form-control" style="flex-grow: 0; flex-basis: 5rem;" type="number"
+id="windowPadding" onblur="changeNumber(this.id, this.value)" placeholder="18" />
+</div>
+<div class="input-group mb-2">
+<span class="input-group-text" style="width: 200px">
+<i class="bi bi-fonts me-2"></i>Line Height
+</span>
+<input class="form-control" style="flex-grow: 0; flex-basis: 5rem;" type="number"
+id="windowLineHeight" onblur="changeNumber(this.id, this.value)" placeholder="36" />
+</div>
+<div class="input-group mb-2">
+<span class="input-group-text" style="width: 200px">
+<i class="bi bi-arrows-vertical me-2"></i>
+Item Height
+</span>
+<input class="form-control" style="flex-grow: 0; flex-basis: 5rem" type="number"
+id="windowItemHeight" onblur="changeNumber(this.id, this.value)" placeholder="36" />
+</div>
+<div class="input-group mb-2">
+<span class="input-group-text" style="width: 200px">
+<i class="bi bi-square me-2"></i>
+Item Padding
+</span>
+<input class="form-control" style="flex-grow: 0; flex-basis: 5rem" type="number"
+id="windowItemPadding" onblur="changeNumber(this.id, this.value)" placeholder="8" />
+</div>
+<div class="input-group mb-2">
+<span class="input-group-text" style="width: 200px">
+<i class="bi bi-arrows-vertical me-2"></i>
+Item Spacing
+</span>
+<input class="form-control" style="flex-grow: 0; flex-basis: 5rem" type="number"
+id="windowRowSpacing" onblur="changeNumber(this.id, this.value)" placeholder="4" />
+</div>
+<div class="input-group mb-4">
+<span class="input-group-text" style="width: 200px">
+<i class="bi bi-arrows me-2"></i>
+Item Spacing
+</span>
+<input class="form-control" style="flex-grow: 0; flex-basis: 5rem" type="number"
+id="windowColumnSpacing" onblur="changeNumber(this.id, this.value)" placeholder="8" />
+</div>
+<div class="input-group mb-4">
+<span class="input-group-text" style="width: 200px">
+<i class="bi bi-fonts me-2"></i>
+Font Size
+</span>
+<input class="form-control" style="flex-grow: 0; flex-basis: 5rem" type="number"
+id="fontSize" onblur="changeNumber(this.id, this.value)" placeholder="26" />
+</div>
+<hr class="mt-4 mb-4" />
+<label class="form-label">Cursor Style</label>
+<select class="form-select mb-4" id="cursorStyle"
+onchange="onCursorStyleChange(cursorStyle.value)">
+<option value="default">Default</option>
+<option value="image">Custom Image</option>
+</select>
+<div id="cursorStyleBox">
+<input class="form-control" type="file" id="cursorBackgroundFile" accept="image/png"
+onchange="changeFile(this.id, 'img', this.value)" />
+<p class="info mb-4">File must be located in game/img/system</p>
+<label class="form-label">Adjust</label>
+<div class="d-flex mb-4">
+<div>
+<div class="input-group me-2">
+<span class="input-group-text">x</span>
+<input class="input-group-text" type="number" style="width: 5rem"
+id="cursorAdjustX" onblur="changeNumber(this.id, this.value)" />
+</div>
+</div>
+<div>
+<div class="input-group">
+<span class="input-group-text">y</span>
+<input class="input-group-text" type="number" style="width: 5rem"
+id="cursorAdjustY" onblur="changeNumber(this.id, this.value)" />
+</div>
+</div>
+</div>
+</div>
+<label class="form-check form-switch mb-4">
+<input class="form-check-input" type="checkbox" id="blinkCursor"
+onchange="changeBoolean(this.id, this.checked)" />
+<span class="form-check-label">Blink?</span>
+</label>
+<hr class="mt-4 mb-4" />
+<label class="form-label mb-2">When Command is disabled</label>
+<p></p>
+<label class="form-label">Text Opacity</label>
+<input class="form-control mb-4" type="number" style="width: 6rem" id="disabledTextOpacity"
+onblur="changeNumber(this.id, this.value)" />
+<div class="d-flex align-items-end">
+<div class="me-2">
+<label class="form-check form-switch">
+<input class="form-check-input" type="checkbox" id="overrideDisabledTextColor"
+onchange="onOverrideDisabledTextColorChange(overrideDisabledTextColor.checked)" />
+<span class="form-check-label">Change Text Color?</span>
+</label>
+</div>
+<input type="color" class="input-group-text form-control-color" id="disabledTextColor"
+onchange="changeColor(this.id, this.value)" />
+</div>
+</div>
+</div>
+
+<div class="card">
+<h2 class="card-header d-flex justify-content-between collapsed" data-bs-toggle="collapse"
+data-bs-target="#gaugeSettings">
+Gauge Settings
+<button class="btn btn-outline-secondary">
+<i class="bi bi-chevron-up arrow"></i>
+</button>
+</h2>
+<div class="card-body collapse" id="gaugeSettings">
+
+<p class="info mb-4">
+<span class="bi bi-info-square me-1"></span>
+Gauges Settings affect all Gauges in your game.
+</p>
+
+<div class="alert alert-warning mb-4 mv">
+<p>
+<span class="bi bi-exclamation-triangle me-1"></span>
+Some settings may not support MV.
+</p>
+</div>
+
+<div class="alert alert-warning" id="VisustellaGaugesCompatibilityWarning">
+<p class="mb-4">
+<span class="bi bi-sign-merge-right me-1"></span>
+Visustella Skill & States Core detected.
+Some settings may not work as expected.
+</p>
+</div>
+
+<div class="row mb-4">
+<div class="col">
+<label class="form-label">Width</label>
+<div class="input-group">
+<span class="input-group-text"><i class="bi bi-arrows"></i></span>
+<input type="number" class="form-control" id="gaugeWidth"
+onblur="changeNumber(this.id, this.value)" />
+</div>
+</div>
+<div class="col">
+<label class="form-label">Height</label>
+<div class="input-group">
+<span class="input-group-text"><i class="bi bi-arrows-vertical"></i></span>
+<input type="number" class="form-control" id="gaugeHeight"
+onblur="changeNumber(this.id, this.value)" />
+</div>
+</div>
+</div>
+
+<label class="form-label">Override Width in</label>
+<select class="form-select mb-4" id="gaugeWidthOverrideScene"
+onchange="changeText(this.id, this.value)">
+<option value="global">All Scenes</option>
+<option value="exceptBattle">All Scenes except Battle</option>
+<option value="menu">Main Menu only</option>
+</select>
+
+<label class="form-label">Override Height in</label>
+<select class="form-select mb-4" id="gaugeHeightOverrideScene"
+onchange="changeText(this.id, this.value)">
+<option value="global">All Scenes</option>
+<option value="exceptBattle">All Scenes except Battle</option>
+<option value="menu">Main Menu only</option>
+</select>
+
+<div class="row mt-4 mb-4">
+<div class="col">
+<label class="form-label">Label Font Size</label>
+<div class="input-group" style="width: 10rem;">
+<span class="input-group-text"><i class="bi bi-fonts"></i></span>
+<input class="form-control" type="number" id="gaugeLabelFontSize"
+onblur="changeNumber(this.id, this.value)" />
+</div>
+</div>
+<div class="col">
+<label class="form-label">Value Font Size</label>
+<div class="input-group" style="width: 10rem;">
+<span class="input-group-text"><i class="bi bi-fonts"></i></span>
+<input class="form-control" type="number" id="gaugeValueFontSize"
+onblur="changeNumber(this.id, this.value)" />
+</div>
+</div>
+</div>
+
+<div class="row mb-4">
+<div class="col">
+<label class="form-label">Label Vert Adjust</label>
+<div class="input-group" style="width: 10rem">
+<span class="input-group-text">
+<i class="bi bi-fonts"></i>
+<i class="bi bi-arrow-down"></i>
+</span>
+<input class="form-control" type="number" id="gaugeLabelY"
+onblur="changeNumber(this.id, this.value)" />
+</div>
+</div>
+<div class="col">
+<label class="form-label">Value Vert Adjust</label>
+<div class="input-group" style="width: 10rem">
+<span class="input-group-text">
+<i class="bi bi-fonts"></i>
+<i class="bi bi-arrow-down"></i>
+</span>
+<input class="form-control" type="number" id="gaugeValueY"
+onblur="changeNumber(this.id, this.value)" />
+</div>
+</div>
+</div>
+
+<label class="form-label">Style</label>
+<select class="form-select mb-4" id="gaugeStyle" onchange="onGaugeStyleChange(this.value)">
+<option value="default">RPG Maker Default</option>
+<option value="stretch">Stretch fully to left</option>
+<option value="text">Text Only</option>
+</select>
+
+<label class="form-check form-switch mb-4 mz">
+<input class="form-check-input" type="checkbox" id="showGaugeMaxValues"
+onchange="changeBoolean(this.id, this.checked)" />
+<span class="form-check-label">Show Max Value?</span>
+</label>
+
+</div>
+</div>
+
+<div class="card">
+<h2 class="card-header d-flex justify-content-between collapsed" data-bs-toggle="collapse"
+data-bs-target="#gaugeColors">
+Gauge Colors
+<button class="btn btn-outline-secondary">
+<i class="bi bi-chevron-up arrow"></i>
+</button>
+</h2>
+<div class="card-body collapse" id="gaugeColors">
+
+<p class="info mb-4">
+<span class="bi bi-info-square me-1"></span>
+Gauges Colors affect all Gauges in your game.
+</p>
+
+<div class="alert alert-info mv">
+MV may not support every color picker.
+</div>
+
+<div class="d-flex mb-2">
+<button class="btn btn-outline-secondary me-2" onclick="healActor()">
+<i class="bi bi-eye me-2"></i>Regular
+</button>
+<button class="btn btn-outline-secondary me-2" onclick="makeActorCrisis()">
+<i class="bi bi-eye me-2"></i>Crisis
+</button>
+<button class="btn btn-outline-secondary me-2" onclick="makeActorDead()">
+<i class="bi bi-eye me-2"></i>Dead
+</button>
+</div>
+<p class="info mb-4">By default, TP cannot be previewed outside from battles</p>
+
+<div>
+<div class="d-flex mb-4">
+<div class="d-flex flex-column me-4">
+<label class="form-label">HP Label</label>
+<div class="input-group">
+<span class="input-group-text" id="hpLabelTextColorSpan" style="
+font-size: larger;
+text-decoration: underline;
+text-decoration-thickness: 4px;
+  ">
+A
+</span>
+<select class="input-group-text form-select my-color-picker" style="width: 3rem"
+id="hpLabelTextColor"
+onchange="onTextColorChange('hpLabel', hpLabelTextColor.value)"></select>
+</div>
+</div>
+<div class="d-flex flex-column me-4">
+<label class="form-label">HP Value</label>
+<div class="input-group">
+<span class="input-group-text" id="hpValuesTextColorSpan" style="
+font-size: larger;
+text-decoration: underline;
+text-decoration-thickness: 4px;
+  ">
+A
+</span>
+<select class="input-group-text form-select my-color-picker" style="width: 3rem"
+id="hpValuesTextColor"
+onchange="onTextColorChange('hpValues', hpValuesTextColor.value)"></select>
+</div>
+</div>
+<div class="d-flex flex-column me-4">
+<label class="form-label">HP Crisis</label>
+<div class="input-group">
+<span class="input-group-text" id="hpCrisisTextColorSpan" style="
+font-size: larger;
+text-decoration: underline;
+text-decoration-thickness: 4px;
+  ">
+A
+</span>
+<select class="input-group-text form-select my-color-picker" style="width: 3rem"
+id="hpCrisisTextColor"
+onchange="onTextColorChange('hpCrisis', hpCrisisTextColor.value)"></select>
+</div>
+</div>
+<div class="d-flex flex-column me-4">
+<label class="form-label">HP Knockout</label>
+<div class="input-group">
+<span class="input-group-text" id="hpDeadTextColorSpan" style="
+font-size: larger;
+text-decoration: underline;
+text-decoration-thickness: 4px;
+  ">
+A
+</span>
+<select class="input-group-text form-select my-color-picker" style="width: 3rem"
+id="hpDeadTextColor"
+onchange="onTextColorChange('hpDead', hpDeadTextColor.value)"></select>
+</div>
+</div>
+</div>
+<div class="d-flex mb-4">
+<div class="d-flex flex-column me-4">
+<label class="form-label">MP Label</label>
+<div class="input-group">
+<span class="input-group-text" id="mpLabelTextColorSpan" style="
+font-size: larger;
+text-decoration: underline;
+text-decoration-thickness: 4px;
+  ">
+A
+</span>
+<select class="input-group-text form-select my-color-picker" style="width: 3rem"
+id="mpLabelTextColor"
+onchange="onTextColorChange('mpLabel', mpLabelTextColor.value)"></select>
+</div>
+</div>
+<div class="d-flex flex-column me-4">
+<label class="form-label">MP Value</label>
+<div class="input-group">
+<span class="input-group-text" id="mpValuesTextColorSpan" style="
+font-size: larger;
+text-decoration: underline;
+text-decoration-thickness: 4px;
+  ">
+A
+</span>
+<select class="input-group-text form-select my-color-picker" style="width: 3rem"
+id="mpValuesTextColor"
+onchange="onTextColorChange('mpValues', mpValuesTextColor.value)"></select>
+</div>
+</div>
+
+<div class="d-flex flex-column me-4">
+<label class="form-label">MP Value (Depleted)</label>
+<div class="input-group">
+<span class="input-group-text" id="mpEmptyTextColorSpan" style="
+font-size: larger;
+text-decoration: underline;
+text-decoration-thickness: 4px;
+  ">
+A
+</span>
+<select class="input-group-text form-select my-color-picker" style="width: 3rem"
+id="mpEmptyTextColor"
+onchange="onTextColorChange('mpEmpty', mpEmptyTextColor.value)"></select>
+</div>
+</div>
+
+</div>
+<div class="d-flex mb-4">
+<div class="d-flex flex-column me-4">
+<label class="form-label">TP Label</label>
+<div class="input-group">
+<span class="input-group-text" id="tpLabelTextColorSpan" style="
+font-size: larger;
+text-decoration: underline;
+text-decoration-thickness: 4px;
+  ">
+A
+</span>
+<select class="input-group-text form-select my-color-picker" style="width: 3rem"
+id="tpLabelTextColor"
+onchange="onTextColorChange('tpLabel', tpLabelTextColor.value)"></select>
+</div>
+</div>
+<div class="d-flex flex-column me-4">
+<label class="form-label">TP Value</label>
+<div class="input-group">
+<span class="input-group-text" id="hpLabelTextColorSpan" style="
+font-size: larger;
+text-decoration: underline;
+text-decoration-thickness: 4px;
+  ">
+A
+</span>
+<select class="input-group-text form-select my-color-picker" style="width: 3rem"
+id="tpValuesTextColor"
+onchange="onTextColorChange('tpValues', tpValuesTextColor.value)"></select>
+</div>
+</div>
+</div>
+</div>
+
+<hr>
+<label class="form-label mz">Gauge Colors</label>
+<div class="row mb-4">
+<div class="col">
+<label class="form-label">HP</label>
+<div class="d-flex">
+<input type="color" class="form-control form-control-color me-2" id="gaugeColorHp1"
+onchange="onGaugeColorChange('Hp1', gaugeColorHp1.value)" />
+<input type="color" class="form-control form-control-color me-2" id="gaugeColorHp2"
+onchange="onGaugeColorChange('Hp2', gaugeColorHp2.value)" />
+<button class="btn btn-outline-secondary" onclick="onResetGaugeColor('Hp')">
+<i class="bi bi-arrow-counterclockwise"></i>
+</button>
+</div>
+</div>
+<div class="col">
+<label class="form-label">HP (Crisis)</label>
+<div class="d-flex">
+<input type="color" class="form-control form-control-color me-2"
+id="gaugeColorHpCrisis1"
+onchange="onGaugeColorChange('HpCrisis1', gaugeColorHpCrisis1.value)" />
+<input type="color" class="form-control form-control-color me-2"
+id="gaugeColorHpCrisis2"
+onchange="onGaugeColorChange('HpCrisis2', gaugeColorHpCrisis2.value)" />
+<button class="btn btn-outline-secondary" onclick="onResetGaugeColor('HpCrisis')">
+<i class="bi bi-arrow-counterclockwise"></i>
+</button>
+</div>
+</div>
+<div class="col"></div>
+</div>
+<div class="row mb-4">
+<div class="col">
+<label class="form-label">MP</label>
+<div class="d-flex">
+<input type="color" class="form-control form-control-color me-2" id="gaugeColorMp1"
+onchange="onGaugeColorChange('Mp1', gaugeColorMp1.value)" />
+<input type="color" class="form-control form-control-color me-2" id="gaugeColorMp2"
+onchange="onGaugeColorChange('Mp2', gaugeColorMp2.value)" />
+<button class="btn btn-outline-secondary" onclick="onResetGaugeColor('Mp')">
+<i class="bi bi-arrow-counterclockwise"></i>
+</button>
+</div>
+</div>
+<div class="col">
+<label class="form-label">TP</label>
+<div class="d-flex">
+<input type="color" class="form-control form-control-color me-2" id="gaugeColorTp1"
+onchange="onGaugeColorChange('Tp1', gaugeColorTp1.value)" />
+<input type="color" class="form-control form-control-color me-2" id="gaugeColorTp2"
+onchange="onGaugeColorChange('Tp2', gaugeColorTp2.value)" />
+<button class="btn btn-outline-secondary" onclick="onResetGaugeColor('Tp')">
+<i class="bi bi-arrow-counterclockwise"></i>
+</button>
+</div>
+</div>
+<div class="col">
+<label class="form-label">ATB</label>
+<div class="d-flex">
+<input type="color" class="form-control form-control-color me-2" id="gaugeColorAtb1"
+onchange="onGaugeColorChange('Atb1', gaugeColorAtb1.value)" />
+<input type="color" class="form-control form-control-color me-2" id="gaugeColorAtb2"
+onchange="onGaugeColorChange('Atb2', gaugeColorAtb2.value)" />
+<button class="btn btn-outline-secondary" onclick="onResetGaugeColor('Atb')">
+<i class="bi bi-arrow-counterclockwise"></i>
+</button>
+</div>
+</div>
+</div>
+
+<hr>
+<label class="form-label mz">Background</label>
+<div class="row mb-4 mz">
+<div class="col">
+<label class="form-label">HP</label>
+<div class="d-flex">
+<input type="color" class="form-control form-control-color me-2"
+id="gaugeBackgroundColorHp"
+onchange="onGaugeBackgroundColorChange('Hp', gaugeBackgroundColorHp.value)" />
+<button class="btn btn-outline-secondary"
+onclick="onResetGaugeBackgroundColor('Hp')">
+<i class="bi bi-arrow-counterclockwise"></i>
+</button>
+</div>
+</div>
+<div class="col">
+<label class="form-label">HP (Crisis)</label>
+<div class="d-flex">
+<input type="color" class="form-control form-control-color me-2"
+id="gaugeBackgroundColorHpCrisis"
+onchange="onGaugeBackgroundColorChange('HpCrisis', gaugeBackgroundColorHpCrisis.value)" />
+<button class="btn btn-outline-secondary"
+onclick="onResetGaugeBackgroundColor('HpCrisis')">
+<i class="bi bi-arrow-counterclockwise"></i>
+</button>
+</div>
+</div>
+<div class="col">
+<label class="form-label">HP (Knockout)</label>
+<div class="d-flex">
+<input type="color" class="form-control form-control-color me-2"
+id="gaugeBackgroundColorHpDead"
+onchange="onGaugeBackgroundColorChange('HpDead', gaugeBackgroundColorHpDead.value)" />
+<button class="btn btn-outline-secondary"
+onclick="onResetGaugeBackgroundColor('HpDead')">
+<i class="bi bi-arrow-counterclockwise"></i>
+</button>
+</div>
+</div>
+</div>
+<div class="row mb-4 mz">
+<div class="col">
+<label class="form-label">MP</label>
+<div class="d-flex">
+<input type="color" class="form-control form-control-color me-2"
+id="gaugeBackgroundColorMp"
+onchange="onGaugeBackgroundColorChange('Mp', gaugeBackgroundColorMp.value)" />
+<button class="btn btn-outline-secondary"
+onclick="onResetGaugeBackgroundColor('Mp')">
+<i class="bi bi-arrow-counterclockwise"></i>
+</button>
+</div>
+</div>
+<div class="col">
+<label class="form-label">TP</label>
+<div class="d-flex">
+<input type="color" class="form-control form-control-color me-2"
+id="gaugeBackgroundColorTp"
+onchange="onGaugeBackgroundColorChange('Tp', gaugeBackgroundColorTp.value)" />
+<button class="btn btn-outline-secondary"
+onclick="onResetGaugeBackgroundColor('Tp')">
+<i class="bi bi-arrow-counterclockwise"></i>
+</button>
+</div>
+</div>
+<div class="col">
+<label class="form-label">ATB</label>
+<div class="d-flex">
+<input type="color" class="form-control form-control-color me-2"
+id="gaugeBackgroundColorAtb"
+onchange="onGaugeBackgroundColorChange('Atb', gaugeBackgroundColorAtb.value)" />
+<button class="btn btn-outline-secondary"
+onclick="onResetGaugeBackgroundColor('Atb')">
+<i class="bi bi-arrow-counterclockwise"></i>
+</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+<h4 class="mt-xl">Main Menu</h4>
+<div class="card">
+<h2 class="card-header d-flex justify-content-between collapsed" data-bs-toggle="collapse"
+data-bs-target="#layout">
+Layout 1
+<button class="btn btn-outline-secondary">
+<i class="bi bi-chevron-up arrow"></i>
+</button>
+</h2>
+<div class="card-body collapse" id="layout">
+<label class="form-label">Input Mode (all Scenes)</label>
+<div class="form-row mb-4">
+<div class="btn-group">
+<button type="button" class="btn" id="commandInputModeLeft"
+onclick="onCommandInputMode('left')">
+<i class="bi bi-layout-sidebar-inset"></i> Left
+</button>
+<button type="button" class="btn" id="commandInputModeRight"
+onclick="onCommandInputMode('right')">
+<i class="bi bi-layout-sidebar-inset-reverse"></i> Right
+</button>
+</div>
+</div>
+<hr />
+<label class="form-label">Actor/Status Window</label>
+<div class="form-row mb-4">
+<div class="btn-group">
+<button type="button" class="btn" id="statusOrientationRows"
+onclick="onStatusWindowModeChange('rows')">
+<i class="bi bi-layout-three-columns rotate-90 me-2"></i>Rows
+</button>
+<button type="button" class="btn" id="statusOrientationColumns"
+onclick="onStatusWindowModeChange('columns')">
+<i class="bi bi-layout-three-columns me-2"></i>Columns
+</button>
+<button type="button" class="btn" id="statusOrientationGrid"
+onclick="onStatusWindowModeChange('grid')">
+<i class="bi bi-grid me-2"></i>Grid
+</button>
+<button type="button" class="btn" id="statusOrientationSingleActor"
+onclick="onStatusWindowModeChange('single actor')">
+<i class="bi bi-file-person me-2"></i>Single Actor
+</button>
+<button type="button" class="btn" id="statusOrientationNone"
+onclick="onStatusWindowModeChange('none')">
+<i class="bi bi-x-lg me-2"></i>Don't show
+</button>
+</div>
+</div>
+
+<div id="visibleActorsBox">
+<label class="form-label">Visible Actors</label>
+<div class="d-flex align-items-baseline">
+<input type="number" class="form-control mb-4" placeholder="4" min="1" max="10"
+style="width: 6rem" id="visibleActors"
+onchange="changeNumber(this.id, this.value)" />
+<p class="ms-3 me-3" id="visibleActorsWave">~</p>
+<input type="number" class="form-control mb-4" placeholder="4" min="1" max="10"
+style="width: 6rem" id="visibleActorsMax"
+onchange="changeNumber(this.id, this.value)" />
+</div>
+<label class="form-check form-switch mb-4">
+<input class="form-check-input" type="checkbox" id="autoAdjustVisibleActors"
+onchange="onAutoAdjustVisibleActorsChange(autoAdjustVisibleActors.checked)" />
+<span class="form-check-label">Always adjust to current Party Size?</span>
+</label>
+</div>
+
+<div id="statusOrientationGridBox">
+<div class="d-flex gap-4">
+<div>
+<label class="form-label">Columns</label>
+<input type="number" class="form-control" placeholder="2" min="1" max="10"
+style="width: 6rem;" id="statusWindowCols"
+onchange="changeNumber(this.id, this.value)" />
+</div>
+<div>
+<label class="form-label">Rows</label>
+<input type="number" class="form-control" placeholder="2" min="1" max="10"
+style="width: 6rem;" id="statusWindowRows"
+onchange="changeNumber(this.id, this.value)" />
+</div>
+</div>
+</div>
+
+<hr />
+<label class="form-label">Command Window Position</label>
+
+<div class="form-row mb-4" id="commandOrientationBox">
+<div class="btn-group">
+<button type="button" class="btn" id="commandOrientationSide"
+onclick="onCommandOrientation('side')">
+<i class="bi bi-layout-sidebar-inset-reverse"></i> Side
+</button>
+<button type="button" class="btn" id="commandOrientationTop"
+onclick="onCommandOrientation('top')">
+<i class="bi bi-layout-sidebar-inset rotate-90"></i> Top
+</button>
+<button type="button" class="btn" id="commandOrientationBottom"
+onclick="onCommandOrientation('bottom')">
+<i class="bi bi-layout-sidebar-inset-reverse rotate-90"></i>
+Bottom
+</button>
+</div>
+</div>
+
+<div id="commandOrientationBox2">
+<div class="row">
+<div class="col">
+<div class="row mb-4 g-2" style="width: 10rem">
+<div class="col-4">
+<button class="btn w-100" id="commandPositionTopLeft"
+onclick="change9Dir(this.id)">
+<i class="bi bi-arrow-up-left"></i>
+</button>
+</div>
+<div class="col-4">
+<button class="btn w-100" id="commandPositionTopCenter"
+onclick="change9Dir(this.id)">
+<i class="bi bi-arrow-up"></i>
+</button>
+</div>
+<div class="col-4">
+<button class="btn w-100" id="commandPositionTopRight"
+onclick="change9Dir(this.id)">
+<i class="bi bi-arrow-up-right"></i>
+</button>
+</div>
+<div class="col-4">
+<button class="btn w-100" id="commandPositionMiddleLeft"
+onclick="change9Dir(this.id)">
+<i class="bi bi-arrow-left"></i>
+</button>
+</div>
+<div class="col-4">
+<button class="btn w-100" id="commandPositionMiddleCenter"
+onclick="change9Dir(this.id)">
+<i class="bi bi-fullscreen"></i>
+</button>
+</div>
+<div class="col-4">
+<button class="btn w-100" id="commandPositionMiddleRight"
+onclick="change9Dir(this.id)">
+<i class="bi bi-arrow-right"></i>
+</button>
+</div>
+<div class="col-4">
+<button class="btn w-100" id="commandPositionBottomLeft"
+onclick="change9Dir(this.id)">
+<i class="bi bi-arrow-down-left"></i>
+</button>
+</div>
+<div class="col-4">
+<button class="btn w-100" id="commandPositionBottomCenter"
+onclick="change9Dir(this.id)">
+<i class="bi bi-arrow-down"></i>
+</button>
+</div>
+<div class="col-4">
+<button class="btn w-100" id="commandPositionBottomRight"
+onclick="change9Dir(this.id)">
+<i class="bi bi-arrow-down-right"></i>
+</button>
+</div>
+</div>
+</div>
+</div>
+
+<div class="row">
+<div class="col">
+<div class="input-group mb-4" style="width: 10rem;">
+<span class="input-group-text">x</span>
+<input type="number" class="form-control" id="commandOffsetX"
+onblur="changeNumber(this.id, this.value)" />
+</div>
+</div>
+<div class="col">
+<div class="input-group" style="width: 10rem;">
+<span class="input-group-text">y</span>
+<input type="number" class="form-control" id="commandOffsetY"
+onblur="changeNumber(this.id, this.value)" />
+</div>
+</div>
+<div class="col"></div>
+</div>
+</div>
+
+<div class="row mb-4">
+<div class="col" id="commandWidthBox">
+<label class="form-label">Width</label>
+<input class="form-control" type="number" min="1" max="10000" placeholder="240"
+style="width: 6rem" id="commandWidth" onblur="changeNumber(this.id, this.value)" />
+</div>
+<div class="col" id="commandNumberOfColumnsBox">
+<label class="form-label">Columns</label>
+<input class="form-control" type="number" placeholder="4" min="1" max="10"
+style="width: 6rem" id="commandNumberOfColumns"
+onblur="changeNumber(this.id, this.value)" />
+</div>
+<div class="col" id="commandNumberOfLinesBox">
+<label class="form-label">Rows</label>
+<input class="form-control" type="number" placeholder="2" min="1" max="10"
+style="width: 6rem" id="commandNumberOfLines"
+onblur="changeNumber(this.id, this.value)" />
+</div>
+</div>
+
+<hr>
+
+<div id="goldWindowLayoutBox">
+<label class="form-label">Gold & Game Info Window</label>
+<div class="row">
+<div class="col">
+<div class="row mb-4 g-2" style="width: 10rem">
+<div class="col-4">
+<button class="btn w-100" id="goldWindowPositionTopLeft"
+onclick="change9Dir(this.id)">
+<i class="bi bi-arrow-up-left"></i>
+</button>
+</div>
+<div class="col-4">
+<button class="btn w-100" id="goldWindowPositionTopCenter"
+onclick="change9Dir(this.id)">
+<i class="bi bi-arrow-up"></i>
+</button>
+</div>
+<div class="col-4">
+<button class="btn w-100" id="goldWindowPositionTopRight"
+onclick="change9Dir(this.id)">
+<i class="bi bi-arrow-up-right"></i>
+</button>
+</div>
+<div class="col-4">
+<button class="btn w-100" id="goldWindowPositionMiddleLeft"
+onclick="change9Dir(this.id)">
+<i class="bi bi-arrow-left"></i>
+</button>
+</div>
+<div class="col-4">
+<button class="btn w-100" id="goldWindowPositionMiddleCenter"
+onclick="change9Dir(this.id)">
+<i class="bi bi-fullscreen"></i>
+</button>
+</div>
+<div class="col-4">
+<button class="btn w-100" id="goldWindowPositionMiddleRight"
+onclick="change9Dir(this.id)">
+<i class="bi bi-arrow-right"></i>
+</button>
+</div>
+<div class="col-4">
+<button class="btn w-100" id="goldWindowPositionBottomLeft"
+onclick="change9Dir(this.id)">
+<i class="bi bi-arrow-down-left"></i>
+</button>
+</div>
+<div class="col-4">
+<button class="btn w-100" id="goldWindowPositionBottomCenter"
+onclick="change9Dir(this.id)">
+<i class="bi bi-arrow-down"></i>
+</button>
+</div>
+<div class="col-4">
+<button class="btn w-100" id="goldWindowPositionBottomRight"
+onclick="change9Dir(this.id)">
+<i class="bi bi-arrow-down-right"></i>
+</button>
+</div>
+</div>
+</div>
+</div>
+<div class="row">
+<div class="col">
+<div class="input-group mb-4" style="width: 10rem;">
+<span class="input-group-text">x</span>
+<input type="number" class="form-control" id="goldWindowOffsetX"
+onblur="changeNumber(this.id, this.value)" />
+</div>
+</div>
+<div class="col">
+<div class="input-group" style="width: 10rem;">
+<span class="input-group-text">y</span>
+<input type="number" class="form-control" id="goldWindowOffsetY"
+onblur="changeNumber(this.id, this.value)" />
+</div>
+</div>
+<div class="col">
+<div class="input-group" style="width: 10rem;">
+<span class="input-group-text"><i class="bi bi-arrows"></i></span>
+<input type="number" class="form-control" id="goldWindowWidth"
+onblur="changeNumber(this.id, this.value)" />
+</div>
+</div>
+</div>
+</div>
+
+<hr>
+
+<div class="input-group mb-2">
+<span class="input-group-text" style="width: 200px">
+<i class="bi bi-arrow-bar-up me-2"></i>
+Top Spacing
+</span>
+<input class="form-control" style="flex-grow: 0; flex-basis: 5rem" type="number"
+id="topSpacing" onblur="changeNumber(this.id, this.value)" />
+</div>
+<div class="input-group mb-2">
+<span class="input-group-text" style="width: 200px">
+<i class="bi bi-arrow-bar-down me-2"></i>
+Bottom Spacing
+</span>
+<input class="form-control" style="flex-grow: 0; flex-basis: 5rem" type="number"
+id="bottomSpacing" onblur="changeNumber(this.id, this.value)" />
+</div>
+<div class="input-group mb-2">
+<span class="input-group-text" style="width: 200px">
+<i class="bi bi-arrow-bar-left me-2"></i>
+Left Spacing
+</span>
+<input class="form-control" style="flex-grow: 0; flex-basis: 5rem" type="number"
+id="leftSpacing" onblur="changeNumber(this.id, this.value)" />
+</div>
+<div class="input-group mb-2">
+<span class="input-group-text" style="width: 200px">
+<i class="bi bi-arrow-bar-right me-2"></i>
+Right Spacing
+</span>
+<input class="form-control" style="flex-grow: 0; flex-basis: 5rem" type="number"
+id="rightSpacing" onblur="changeNumber(this.id, this.value)" />
+</div>
+<div class="input-group mb-2">
+<span class="input-group-text" style="width: 200px">
+<i class="bi bi-arrows-angle-expand rotate-45 me-2"></i>
+Inner Spacing
+</span>
+<input class="form-control" style="flex-grow: 0; flex-basis: 5rem" type="number"
+id="horzSpacing" onblur="changeNumber(this.id, this.value)" />
+</div>
+<div class="input-group mb-2">
+<span class="input-group-text" style="width: 200px">
+<i class="bi bi-arrows-angle-expand rotate-135 me-2"></i>
+Inner Spacing
+</span>
+<input class="form-control" style="flex-grow: 0; flex-basis: 5rem" type="number"
+id="vertSpacing" onblur="changeNumber(this.id, this.value)" />
+</div>
+</div>
+</div>
+
+<div class="card">
+<h2 class="card-header d-flex justify-content-between collapsed" data-bs-toggle="collapse"
+data-bs-target="#layoutManual">
+Layout 2
+<button class="btn btn-outline-secondary">
+<i class="bi bi-chevron-up arrow"></i>
+</button>
+</h2>
+<div class="card-body collapse" id="layoutManual">
+<label class="form-check form-switch mb-4">
+<input class="form-check-input" type="checkbox" id="overrideCommandRectangle"
+onchange="onLayout2CheckboxChange('command', this.checked)" />
+<span class="form-check-label">Override Values for Command Window?</span>
+</label>
+<div class="row mb-4" id="commandRectangleByValuesBox">
+<div class="input-group col">
+<span class="input-group-text">x</span>
+<input type="number" class="form-control" id="commandRectangle_x"
+onblur="onLayout2ValueChange('command', 'x', this.value)" />
+</div>
+<div class="input-group col">
+<span class="input-group-text">y</span>
+<input type="number" class="form-control" id="commandRectangle_y"
+onblur="onLayout2ValueChange('command', 'y', this.value)" />
+</div>
+<div class="input-group col">
+<span class="input-group-text"><i class="bi bi-arrows"></i></span>
+<input type="number" class="form-control" id="commandRectangle_width"
+onblur="onLayout2ValueChange('command', 'width', this.value)" />
+</div>
+<div class="input-group col">
+<span class="input-group-text"><i class="bi bi-arrows-vertical"></i></span>
+<input type="number" class="form-control" id="commandRectangle_height"
+onblur="onLayout2ValueChange('command', 'height', this.value)" />
+</div>
+</div>
+<label class="form-check form-switch mb-4">
+<input class="form-check-input" type="checkbox" id="overrideStatusRectangle"
+onchange="onLayout2CheckboxChange('status', this.checked)" />
+<span class="form-check-label">Override Values for Status Window?</span>
+</label>
+<div class="row mb-4" id="statusRectangleByValuesBox">
+<div class="input-group col">
+<span class="input-group-text">x</span>
+<input type="number" class="form-control" id="statusRectangle_x"
+onblur="onLayout2ValueChange('status', 'x', this.value)" />
+</div>
+<div class="input-group col">
+<span class="input-group-text">y</span>
+<input type="number" class="form-control" id="statusRectangle_y"
+onblur="onLayout2ValueChange('status', 'y', this.value)" />
+</div>
+<div class="input-group col">
+<span class="input-group-text"><i class="bi bi-arrows"></i></span>
+<input type="number" class="form-control" id="statusRectangle_width"
+onblur="onLayout2ValueChange('status', 'width', this.value)" />
+</div>
+<div class="input-group col">
+<span class="input-group-text"><i class="bi bi-arrows-vertical"></i></span>
+<input type="number" class="form-control" id="statusRectangle_height"
+onblur="onLayout2ValueChange('status', 'height', this.value)" />
+</div>
+</div>
+<label class="form-check form-switch mb-4">
+<input class="form-check-input" type="checkbox" id="overrideGoldRectangle"
+onchange="onLayout2CheckboxChange('gold', this.checked)" />
+<span class="form-check-label">Override Values for Gold/Game Info Window?</span>
+</label>
+<div class="row" id="goldRectangleByValuesBox">
+<div class="input-group col">
+<span class="input-group-text">x</span>
+<input type="number" class="form-control" id="goldRectangle_x"
+onblur="onLayout2ValueChange('gold', 'x', this.value)" />
+</div>
+<div class="input-group col">
+<span class="input-group-text">y</span>
+<input type="number" class="form-control" id="goldRectangle_y"
+onblur="onLayout2ValueChange('gold', 'y', this.value)" />
+</div>
+<div class="input-group col">
+<span class="input-group-text"><i class="bi bi-arrows"></i></span>
+<input type="number" class="form-control" id="goldRectangle_width"
+onblur="onLayout2ValueChange('gold', 'width', this.value)" />
+</div>
+<div class="input-group col">
+<span class="input-group-text"><i class="bi bi-arrows-vertical"></i></span>
+<input type="number" class="form-control" id="goldRectangle_height"
+onblur="onLayout2ValueChange('gold', 'height', this.value)" />
+</div>
+</div>
+</div>
+</div>
+
+<div class="card">
+<h2 class="card-header d-flex justify-content-between collapsed" data-bs-toggle="collapse"
+data-bs-target="#scene">
+Menu Scene General
+<button class="btn btn-outline-secondary">
+<i class="bi bi-chevron-up arrow"></i>
+</button>
+</h2>
+<div class="card-body collapse" id="scene">
+
+<div class="d-flex align-items-end gap-4">
+<div>
+<label class="form-label">Background</label>
+<select class="form-select" id="sceneBackgroundType"
+onchange="onSceneBackgroundTypeChange(sceneBackgroundType.value)">
+<option value="mapSprite">Map Sprite</option>
+<option value="image">Image</option>
+<option value="none">None</option>
+</select>
+</div>
+<div>
+<div id="sceneBackgroundFileBox">
+<input class="form-control" type="file" id="sceneBackgroundFile" accept="image/png"
+onchange="changeFile(this.id, 'img', this.value)" />
+<p class="info mb-0">
+File must be located in your game directory/img
+</p>
+</div>
+</div>
+</div>
+
+<div id="sceneBackgroundEffectsBox" class="mt-4">
+<label class="form-label">Effects</label>
+<select class="form-select" id="sceneBackgroundEffects"
+onchange="changeText(this.id, this.value)">
+<option value="blurred">Blurred</option>
+<option value="blackWhite">(MZ) Black White</option>
+<option value="sepia">(MZ) Sepia</option>
+<option value="none">None</option>
+</select>
+
+<p class="info mv mt-4">
+<span class="bi bi-info-square me-1"></span>
+Some filters may not work in RPG Maker MV.<br>
+You may need to close and reopen the game menu to see changes.
+</p>
+</div>
+</div>
+</div>
+
+<h4 class="mt-xl">Party Status</h4>
+<div class="card">
+<h2 class="card-header d-flex justify-content-between collapsed" data-bs-toggle="collapse"
+data-bs-target="#actors">
+Actors/Party General
+<button class="btn btn-outline-secondary">
+<i class="bi bi-chevron-up arrow"></i>
+</button>
+</h2>
+<div class="card-body collapse" id="actors">
+<div class="input-group mb-2">
+<span class="input-group-text" style="width: 200px">
+<i class="bi bi-transparency me-2"></i>Opacity
+</span>
+<input class="form-control" type="number" id="statusOpacity"
+style="flex-grow: 0; flex-basis: 5rem" onblur="changeNumber(this.id, this.value)" />
+</div>
+<div class="input-group mb-2">
+<span class="input-group-text" style="width: 200px">
+<i class="bi bi-square me-2"></i>Padding
+</span>
+<input class="form-control" style="flex-grow: 0; flex-basis: 5rem;" type="number"
+id="statusPadding" onblur="changeNumber(this.id, this.value)" />
+</div>
+<div class="input-group mb-2">
+<span class="input-group-text" style="width: 200px">
+<i class="bi bi-arrows-vertical me-2"></i>
+Item Spacing
+</span>
+<input class="form-control" type="number" id="statusRowSpacing"
+style="flex-grow: 0; flex-basis: 5rem" onblur="changeNumber(this.id, this.value)" />
+<span class="input-group-text">px</span>
+</div>
+<div class="input-group mb-2">
+<span class="input-group-text" style="width: 200px">
+<i class="bi bi-arrows me-2"></i>
+Item Spacing
+</span>
+<input class="form-control" type="number" id="statusColumnSpacing"
+style="flex-grow: 0; flex-basis: 5rem" onblur="changeNumber(this.id, this.value)" />
+<span class="input-group-text">px</span>
+</div>
+<hr />
+<div class="row align-items-start mb-4">
+<div class="col">
+<label class="form-check form-switch mb-4" id="shouldOverrideStatusWindowBox">
+<input class="form-check-input" type="checkbox" id="shouldOverrideStatusWindow"
+onchange="onOverrideStatusWindowChange(shouldOverrideStatusWindow.checked)" />
+<span class="form-check-label">Individual Window File?</span>
+</label>
+</div>
+<div class="col">
+<div id="statusWindowFileBox">
+<input class="form-control" type="file" id="statusWindowFile" accept="image/png"
+onchange="changeFile(this.id, 'img', this.value)" />
+<p class="info mb-0">
+File must be located in your game/img/system
+</p>
+</div>
+</div>
+</div>
+<div class="row align-items-end mb-4">
+<div class="col">
+<label class="form-label">Window Background</label>
+<select class="form-select" id="statusBackgroundType"
+onchange="onStatusBackgroundTypeChange(statusBackgroundType.value)">
+<option value="window">Window</option>
+<option value="dimmed">Dimmed</option>
+<option value="image">Image</option>
+<option value="none">None</option>
+</select>
+</div>
+<div class="col">
+<div id="statusBackgroundFileBox">
+<input class="form-control" type="file" id="statusBackgroundFile" accept="image/png"
+onchange="changeFile(this.id, 'img', this.value)" />
+<p class="info mb-0">
+File must be located in your game directory/img
+</p>
+</div>
+</div>
+</div>
+<div class="row align-items-end mb-4">
+<div class="col">
+<label class="form-label">Item Background</label>
+<select class="form-select" id="statusItemBackgroundType"
+onchange="onStatusItemBackgroundTypeChange(statusItemBackgroundType.value)">
+<option value="dimmed">Dimmed</option>
+<option value="image">Image</option>
+<option value="none">None</option>
+</select>
+</div>
+<div class="col">
+<div id="statusItemBackgroundFileBox">
+<input class="form-control" type="file" id="statusItemBackgroundFile"
+accept="image/png" onchange="changeFile(this.id, 'img', this.value)" />
+<p class="info mb-0">
+File must be located in your game directory/img
+</p>
+</div>
+</div>
+</div>
+<div class="row align-items-end mb-4">
+<div class="col">
+<label class="form-label">Cursor Background</label>
+<select class="form-select" id="statusCursorBackgroundType"
+onchange="onStatusCursorBackgroundTypeChange(statusCursorBackgroundType.value)">
+<option value="default">Default</option>
+<option value="image">Image</option>
+</select>
+</div>
+<div class="col">
+<div id="statusCursorBackgroundFileBox">
+<input class="form-control" type="file" id="statusCursorBackgroundFile"
+accept="image/png" onchange="changeFile(this.id, 'img', this.value)" />
+<p class="info mb-0">
+File must be located in your game directory/img
+</p>
+</div>
+</div>
+</div>
+<div class="row align-items-end mb-4" id="statusBlinkCursorBox">
+<div class="col">
+<label class="form-check form-switch">
+<input class="form-check-input" type="checkbox" id="statusBlinkCursor"
+onchange="changeBoolean(this.id, this.checked)" />
+<span class="form-check-label">Blink?</span>
+</label>
+</div>
+</div>
+<div class="row align-items-end mb-4">
+<div class="col">
+<label class="form-label">Pending Background (Formation Change)</label>
+<select class="form-select" id="statusPendingBackgroundType"
+onchange="onStatusPendingBackgroundTypeChange(statusPendingBackgroundType.value)">
+<option value="default">Default</option>
+<option value="image">Image</option>
+</select>
+</div>
+<div class="col">
+<div id="statusPendingBackgroundFileBox">
+<input class="form-control" type="file" id="statusPendingBackgroundFile"
+accept="image/png" onchange="changeFile(this.id, 'img', this.value)" />
+<p class="info mb-0">
+File must be located in your game directory/img
+</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="card">
+<h2 class="card-header d-flex justify-content-between collapsed" data-bs-toggle="collapse"
+data-bs-target="#actorImageCollapsible">
+Actor Portrait
+<button class="btn btn-outline-secondary">
+<i class="bi bi-chevron-up arrow"></i>
+</button>
+</h2>
+<div class="card-body collapse" id="actorImageCollapsible">
+<label class="form-label">Image</label>
+<select class="form-select mb-4" id="statusRenderType"
+onchange="onStatusRenderTypeChange(statusRenderType.value)">
+<option value="face">Face</option>
+<option value="battler">SV Battler</option>
+<option value="mapSprite">Map Sprite</option>
+<option value="portrait">Custom Image</option>
+<option value="none">None</option>
+</select>
+<div class="mb-4" id="portraitNotetagHint">
+<p class="info mb-4">
+<i class="bi bi-info-square me-1"></i>
+Menu Portraits are configured in the Plugin Manager.
+</p>
+<button class="btn btn-link" data-bs-target="#portraitScriptCallsHint"
+data-bs-toggle="collapse">
+<i class="bi bi-chevron-down me-2"></i>Show Script Calls
+</button>
+<div class="card card-body collapse" id="portraitScriptCallsHint">
+<div class="custom-code">
+$gameActors.actor(1).setMenuPortrait("Reid")
+</div>
+<p class="info mb-4">
+Image named "Reid" must be located in your game directory/img/pictures
+</p>
+<div class="custom-code">
+$gameActors.actor(1).resetMenuPortrait()
+</div>
+</div>
+</div>
+<div id="actorImageBox">
+
+<div class="row mb-4 g-2" style="width: 10rem">
+<div class="col-4">
+<button class="btn w-100" id="actorImagePositionTopLeft"
+onclick="change9Dir(this.id)">
+<i class="bi bi-arrow-up-left"></i>
+</button>
+</div>
+<div class="col-4">
+<button class="btn w-100" id="actorImagePositionTopCenter"
+onclick="change9Dir(this.id)">
+<i class="bi bi-arrow-up"></i>
+</button>
+</div>
+<div class="col-4">
+<button class="btn w-100" id="actorImagePositionTopRight"
+onclick="change9Dir(this.id)">
+<i class="bi bi-arrow-up-right"></i>
+</button>
+</div>
+<div class="col-4">
+<button class="btn w-100" id="actorImagePositionMiddleLeft"
+onclick="change9Dir(this.id)">
+<i class="bi bi-arrow-left"></i>
+</button>
+</div>
+<div class="col-4">
+<button class="btn w-100" id="actorImagePositionMiddleCenter"
+onclick="change9Dir(this.id)">
+<i class="bi bi-fullscreen"></i>
+</button>
+</div>
+<div class="col-4">
+<button class="btn w-100" id="actorImagePositionMiddleRight"
+onclick="change9Dir(this.id)">
+<i class="bi bi-arrow-right"></i>
+</button>
+</div>
+<div class="col-4">
+<button class="btn w-100" id="actorImagePositionBottomLeft"
+onclick="change9Dir(this.id)">
+<i class="bi bi-arrow-down-left"></i>
+</button>
+</div>
+<div class="col-4">
+<button class="btn w-100" id="actorImagePositionBottomCenter"
+onclick="change9Dir(this.id)">
+<i class="bi bi-arrow-down"></i>
+</button>
+</div>
+<div class="col-4">
+<button class="btn w-100" id="actorImagePositionBottomRight"
+onclick="change9Dir(this.id)">
+<i class="bi bi-arrow-down-right"></i>
+</button>
+</div>
+</div>
+
+<div class="form-group row mb-4">
+<div class="input-group col">
+<span class="input-group-text">x</span>
+<input type="number" class="form-control" id="actorImageOffsetX"
+onblur="changeNumber(this.id, this.value)" />
+<span class="input-group-text">px</span>
+</div>
+<div class="input-group col">
+<span class="input-group-text">y</span>
+<input type="number" class="form-control" id="actorImageOffsetY"
+onblur="changeNumber(this.id, this.value)" />
+<span class="input-group-text">px</span>
+</div>
+</div>
+
+<label class="form-label">Crop</label>
+<div class="form-group row mb-4">
+<div class="input-group col">
+<span class="input-group-text"><i class="bi bi-arrows"></i></span>
+<input type="number" class="form-control" id="actorImageCropX"
+onblur="changeNumber(this.id, this.value)" />
+<span class="input-group-text">px</span>
+</div>
+<div class="input-group col">
+<span class="input-group-text"><i class="bi bi-arrows-vertical"></i></span>
+<input type="number" class="form-control" id="actorImageCropY"
+onblur="changeNumber(this.id, this.value)" />
+<span class="input-group-text">px</span>
+</div>
+</div>
+<label class="form-label">Scale</label>
+<div class="row">
+<div class="col">
+<div class="input-group">
+<span class="input-group-text"><i class="bi bi-arrows"></i></span>
+<input type="number" class="form-control" id="actorImageScale"
+onblur="changeNumber(this.id, this.value)" />
+<span class="input-group-text">%</span>
+</div>
+</div>
+<div class="col"></div>
+</div>
+
+</div>
+
+</div>
+</div>
+
+<div class="card">
+<h2 class="card-header d-flex justify-content-between collapsed" data-bs-toggle="collapse"
+data-bs-target="#actorShadowBoxCollapsible">
+Actor Shadow Box
+<button class="btn btn-outline-secondary">
+<i class="bi bi-chevron-up arrow"></i>
+</button>
+</h2>
+<div class="card-body collapse" id="actorShadowBoxCollapsible">
+<label class="form-check form-switch mb-4">
+<input class="form-check-input" type="checkbox" id="showShadowBox"
+onchange="onShowShadowBoxChange(showShadowBox.checked)" />
+<span class="form-check-label">Show?</span>
+</label>
+<div id="actorShadowBoxBox">
+<div class="row">
+<label class="col form-label">Position</label>
+<div class="col"></div>
+<label class="col form-label">Width & Height</label>
+<div class="col"></div>
+</div>
+<div class="row mb-4">
+<div class="input-group col">
+<span class="input-group-text">x</span>
+<input type="number" class="form-control" id="shadowBoxX" placeholder="0"
+onblur="changeNumber(this.id, this.value)" />
+</div>
+<div class="input-group col">
+<span class="input-group-text">y</span>
+<input type="number" class="form-control" id="shadowBoxY" placeholder="0"
+onblur="changeNumber(this.id, this.value)" />
+</div>
+<div class="input-group col">
+<span class="input-group-text"><i class="bi bi-arrows"></i></span>
+<input type="number" class="form-control" id="shadowBoxWidth"
+onblur="changeNumber(this.id, this.value)" />
+</div>
+<div class="input-group col">
+<span class="input-group-text"><i class="bi bi-arrows-vertical"></i></span>
+<input type="number" class="form-control" id="shadowBoxHeight"
+onblur="changeNumber(this.id, this.value)" />
+</div>
+</div>
+<div class="input-group mb-2">
+<span class="input-group-text"><i class="bi bi-paint-bucket me-1"></i>Color</span>
+<input type="color" class="input-group-text form-control-color me-2" id="shadowBoxColor"
+onchange="changeColor(this.id, this.value)" />
+</div>
+<div class="input-group mb-4">
+<span class="input-group-text"><i class="bi bi-transparency me-1"></i>Opacity</span>
+<input type="number" class="form-control" min="0" max="255"
+style="flex-grow: 0; flex-basis: 5rem" id="shadowBoxOpacity"
+onblur="changeNumber(this.id, this.value)" />
+</div>
+<div class="row">
+<div class="col">
+<label class="form-label">Gradient Direction</label>
+<div class="d-flex">
+<button class="btn me-2" id="shadowBoxGradientTop"
+onclick="onShadowBoxGradientChange('top')">
+<span class="bi bi-chevron-up"></span>
+</button>
+<button class="btn me-2" id="shadowBoxGradientBottom"
+onclick="onShadowBoxGradientChange('bottom')">
+<span class="bi bi-chevron-down"></span>
+</button>
+<button class="btn me-2" id="shadowBoxGradientLeft"
+onclick="onShadowBoxGradientChange('left')">
+<span class="bi bi-chevron-left"></span>
+</button>
+<button class="btn me-2" id="shadowBoxGradientRight"
+onclick="onShadowBoxGradientChange('right')">
+<span class="bi bi-chevron-right"></span>
+</button>
+<button class="btn me-2" id="shadowBoxGradientNone"
+onclick="onShadowBoxGradientChange('none')">
+<span class="bi bi-x-lg"></span>
+</button>
+</div>
+</div>
+<div class="col" id="shadowBoxGradientPowerBox">
+<label class="form-label">Gradient Power</label>
+<div class="input-group">
+<input class="form-control" type="number" id="shadowBoxGradientPower"
+placeholder="10" min="0" max="100"
+onblur="changeNumber(this.id, this.value)" />
+<span class="input-group-text">%</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="card">
+<h2 class="card-header d-flex justify-content-between collapsed" data-bs-toggle="collapse"
+data-bs-target="#actorNamesCollapsible">
+Actor Name & Class
+<button class="btn btn-outline-secondary">
+<i class="bi bi-chevron-up arrow"></i>
+</button>
+</h2>
+<div class="card-body collapse" id="actorNamesCollapsible">
+<label class="form-label">Name</label>
+<label class="form-check form-switch mb-4">
+<input class="form-check-input" type="checkbox" id="shouldShowName"
+onchange="onShowNameChange(shouldShowName.checked)" />
+<span class="form-check-label">Show?</span>
+</label>
+<div id="actorNameBox">
+<div class="row mb-4">
+<div class="col">
+<label class="form-label">Horizontal Align</label>
+<div class="form-row">
+<div class="btn-group btn-group-lg">
+<button type="button" class="btn" id="nameHorzAlignLeft"
+onclick="onNameHorzAlign('left')">
+<i class="bi bi-align-start"></i>
+</button>
+<button type="button" class="btn" id="nameHorzAlignCenter"
+onclick="onNameHorzAlign('center')">
+<i class="bi bi-align-center"></i>
+</button>
+<button type="button" class="btn" id="nameHorzAlignRight"
+onclick="onNameHorzAlign('right')">
+<i class="bi bi-align-end"></i>
+</button>
+</div>
+</div>
+</div>
+<div class="col">
+<label class="form-label">Vertical Align</label>
+<div class="form-row">
+<div class="btn-group btn-group-lg">
+<button type="button" class="btn" id="nameVertAlignTop"
+onclick="onNameVertAlign('top')">
+<i class="bi bi-align-top"></i>
+</button>
+<button type="button" class="btn" id="nameVertAlignMiddle"
+onclick="onNameVertAlign('middle')">
+<i class="bi bi-align-middle"></i>
+</button>
+<button type="button" class="btn" id="nameVertAlignBottom"
+onclick="onNameVertAlign('bottom')">
+<i class="bi bi-align-bottom"></i>
+</button>
+</div>
+</div>
+</div>
+</div>
+<div class="form-group row mb-4">
+<div class="input-group col">
+<span class="input-group-text">x</span>
+<input type="number" class="form-control" id="nameX"
+onblur="changeNumber(this.id, this.value)" />
+</div>
+<div class="input-group col">
+<span class="input-group-text">y</span>
+<input type="number" class="form-control" id="nameY"
+onblur="changeNumber(this.id, this.value)" />
+</div>
+<div class="input-group col">
+<span class="input-group-text"><i class="bi bi-arrows"></i></span>
+<input type="number" class="form-control" id="nameWidth"
+onblur="changeNumber(this.id, this.value)" />
+</div>
+<div class="col"></div>
+</div>
+<label class="form-label">Text Align</label>
+<div class="mb-4">
+<div class="btn-group">
+<button type="button" class="btn" id="nameTextAlignLeft"
+onclick="onNameTextAlignChange('left')">
+<i class="bi bi-text-left"></i> Left
+</button>
+<button type="button" class="btn" id="nameTextAlignCenter"
+onclick="onNameTextAlignChange('center')">
+<i class="bi bi-text-center"></i> Center
+</button>
+<button type="button" class="btn" id="nameTextAlignRight"
+onclick="onNameTextAlignChange('right')">
+<i class="bi bi-text-right"></i> Right
+</button>
+</div>
+</div>
+<label class="form-label">Font Size</label>
+<div class="input-group mb-4" style="width: 200px;">
+<span class="input-group-text"><i class="bi bi-fonts"></i></span>
+<input class="form-control" type="number" id="nameFontSize"
+onblur="changeNumber(this.id, this.value)" />
+</div>
+<label class="form-label">Text Color</label>
+<div class="input-group mb-4" style="width: 100px">
+<span class="input-group-text" id="nameTextColorSpan" style="
+font-size: larger;
+text-decoration: underline;
+text-decoration-thickness: 4px;
+  ">
+A
+</span>
+<select class="input-group-text form-select my-color-picker" id="nameTextColor"
+onchange="onNameTextColorChange(nameTextColor.value)"></select>
+</div>
+<label class="form-label">Background</label>
+<select class="form-select" id="nameBackgroundType"
+onchange="changeText(this.id, this.value)">
+<option value="gradient" selected>Gradient</option>
+<option value="none">None</option>
+</select>
+</div>
+<hr />
+<label class="form-label">Class</label>
+<label class="form-check form-switch mb-4">
+<input class="form-check-input" type="checkbox" id="shouldShowClass"
+onchange="onShowClassChange(shouldShowClass.checked)" />
+<span class="form-check-label">Show?</span>
+</label>
+<div id="actorClassBox">
+<div class="row mb-4">
+<div class="col">
+<label class="form-label">Horizontal Align</label>
+<div class="form-row">
+<div class="btn-group btn-group-lg">
+<button type="button" class="btn" id="classHorzAlignLeft"
+onclick="onClassHorzAlign('left')">
+<i class="bi bi-align-start"></i>
+</button>
+<button type="button" class="btn" id="classHorzAlignCenter"
+onclick="onClassHorzAlign('center')">
+<i class="bi bi-align-center"></i>
+</button>
+<button type="button" class="btn" id="classHorzAlignRight"
+onclick="onClassHorzAlign('right')">
+<i class="bi bi-align-end"></i>
+</button>
+</div>
+</div>
+</div>
+<div class="col">
+<label class="form-label">Vertical Align</label>
+<div class="form-row">
+<div class="btn-group btn-group-lg">
+<button type="button" class="btn" id="classVertAlignTop"
+onclick="onClassVertAlign('top')">
+<i class="bi bi-align-top"></i>
+</button>
+<button type="button" class="btn" id="classVertAlignMiddle"
+onclick="onClassVertAlign('middle')">
+<i class="bi bi-align-middle"></i>
+</button>
+<button type="button" class="btn" id="classVertAlignBottom"
+onclick="onClassVertAlign('bottom')">
+<i class="bi bi-align-bottom"></i>
+</button>
+</div>
+</div>
+</div>
+</div>
+<div class="form-group row mb-4">
+<div class="input-group col">
+<span class="input-group-text">x</span>
+<input type="number" class="form-control" id="classX"
+onblur="changeNumber(this.id, this.value)" />
+</div>
+<div class="input-group col">
+<span class="input-group-text">y</span>
+<input type="number" class="form-control" id="classY"
+onblur="changeNumber(this.id, this.value)" />
+</div>
+<div class="input-group col">
+<span class="input-group-text"><i class="bi bi-arrows"></i></span>
+<input type="number" class="form-control" id="classWidth"
+onblur="changeNumber(this.id, this.value)" />
+</div>
+<div class="col"></div>
+</div>
+<label class="form-label">Text Align</label>
+<div class="mb-4">
+<div class="btn-group">
+<button type="button" class="btn" id="classTextAlignLeft"
+onclick="onClassTextAlignChange('left')">
+<i class="bi bi-text-left"></i> Left
+</button>
+<button type="button" class="btn" id="classTextAlignCenter"
+onclick="onClassTextAlignChange('center')">
+<i class="bi bi-text-center"></i> Center
+</button>
+<button type="button" class="btn" id="classTextAlignRight"
+onclick="onClassTextAlignChange('right')">
+<i class="bi bi-text-right"></i> Right
+</button>
+</div>
+</div>
+<label class="form-label">Font Size</label>
+<div class="input-group mb-4" style="width: 200px;">
+<span class="input-group-text"><i class="bi bi-fonts"></i></span>
+<input class="form-control" type="number" id="classFontSize"
+onblur="changeNumber(this.id, this.value)" />
+</div>
+<label class="form-label">Text Color</label>
+<div class="input-group mb-4" style="width: 100px">
+<span class="input-group-text" id="classTextColorSpan" style="
+font-size: larger;
+text-decoration: underline;
+text-decoration-thickness: 4px;
+  ">
+A
+</span>
+<select class="input-group-text form-select my-color-picker" id="classTextColor"
+onchange="onClassTextColorChange(classTextColor.value)"></select>
+</div>
+</div>
+</div>
+</div>
+
+<div class="card">
+<h2 class="card-header d-flex justify-content-between collapsed" data-bs-toggle="collapse"
+data-bs-target="#actorLevelCollapsible">
+Actor Level & Exp
+<button class="btn btn-outline-secondary">
+<i class="bi bi-chevron-up arrow"></i>
+</button>
+</h2>
+<div class="card-body collapse" id="actorLevelCollapsible">
+<label class="form-label">Mode</label>
+<select class="form-select mb-4" id="showLevelMode"
+onchange="onShowLevelModeChange(showLevelMode.value)">
+<option value="gauge">Gauge</option>
+<option value="text">Text</option>
+<option value="none">Hide</option>
+</select>
+<div id="levelPositionBox">
+<div class="row mb-4">
+<div class="col">
+<label class="form-label">Horizontal Align</label>
+<div class="form-row">
+<div class="btn-group btn-group-lg">
+<button type="button" class="btn" id="levelInfoHorzAlignLeft"
+onclick="onLevelInfoHorzAlign('left')">
+<i class="bi bi-align-start"></i>
+</button>
+<button type="button" class="btn" id="levelInfoHorzAlignCenter"
+onclick="onLevelInfoHorzAlign('center')">
+<i class="bi bi-align-center"></i>
+</button>
+<button type="button" class="btn" id="levelInfoHorzAlignRight"
+onclick="onLevelInfoHorzAlign('right')">
+<i class="bi bi-align-end"></i>
+</button>
+</div>
+</div>
+</div>
+<div class="col">
+<label class="form-label">Vertical Align</label>
+<div class="form-row">
+<div class="btn-group btn-group-lg">
+<button type="button" class="btn" id="levelInfoVertAlignTop"
+onclick="onLevelInfoVertAlign('top')">
+<i class="bi bi-align-top"></i>
+</button>
+<button type="button" class="btn" id="levelInfoVertAlignMiddle"
+onclick="onLevelInfoVertAlign('middle')">
+<i class="bi bi-align-middle"></i>
+</button>
+<button type="button" class="btn" id="levelInfoVertAlignBottom"
+onclick="onLevelInfoVertAlign('bottom')">
+<i class="bi bi-align-bottom"></i>
+</button>
+</div>
+</div>
+</div>
+</div>
+<div class="form-group row mb-4">
+<div class="input-group col">
+<span class="input-group-text">x</span>
+<input type="number" class="form-control" id="levelX"
+onblur="changeNumber(this.id, this.value)" />
+</div>
+<div class="input-group col">
+<span class="input-group-text">y</span>
+<input type="number" class="form-control" id="levelY"
+onblur="changeNumber(this.id, this.value)" />
+</div>
+<div class="col input-group" id="levelGapBox">
+<span class="input-group-text"><i class="bi bi-distribute-horizontal"></i></span>
+<input type="number" class="form-control" id="levelGap"
+onblur="changeNumber(this.id, this.value)" />
+</div>
+<div class="col" id="levelEmptyBox"></div>
+<div class="col input-group" id="expGaugeWidthBox">
+<span class="input-group-text"><i class="bi bi-arrows"></i></span>
+<input type="number" class="form-control" id="expGaugeWidth"
+onblur="changeNumber(this.id, this.value)" />
+</div>
+<div class="col" id="expGaugeHeightBox">
+<div class="col input-group mz">
+<span class="input-group-text"><i class="bi bi-arrows-vertical"></i></span>
+<input type="number" class="form-control" id="expGaugeHeight"
+onblur="changeNumber(this.id, this.value)" />
+</div>
+</div>
+</div>
+</div>
+<div id="levelAsTextBox">
+<div class="d-flex align-items-end mb-4">
+<div class="d-flex flex-column me-4">
+<label class="form-label">Font Size</label>
+<div class="input-group" style="width: 200px;">
+<span class="input-group-text"><i class="bi bi-fonts"></i></span>
+<input class="form-control" type="number" id="levelFontSize"
+onblur="changeNumber(this.id, this.value)" />
+</div>
+</div>
+<div class="d-flex flex-column me-4">
+<label class="form-label">Text Colors</label>
+<div class="input-group">
+<span class="input-group-text" id="levelTextColor1Span" style="
+font-size: larger;
+text-decoration: underline;
+text-decoration-thickness: 4px;
+  ">
+A
+</span>
+<select class="input-group-text form-select my-color-picker" style="width: 3rem"
+id="levelTextColor1"
+onchange="onLevelTextColor1Change(levelTextColor1.value)"></select>
+</div>
+</div>
+<div class="d-flex flex-column me-4">
+<div class="input-group">
+<span class="input-group-text" id="levelTextColor2Span" style="
+font-size: larger;
+text-decoration: underline;
+text-decoration-thickness: 4px;
+  ">
+A
+</span>
+<select class="input-group-text form-select my-color-picker" style="width: 3rem"
+id="levelTextColor2"
+onchange="onLevelTextColor2Change(levelTextColor2.value)"></select>
+</div>
+</div>
+</div>
+</div>
+
+<div id="levelAsGaugeBox">
+<div class="row mb-4">
+<div class="col">
+<label class="form-label">Gauge Colors</label>
+<div class="d-flex">
+<input type="color" class="form-control form-control-color me-2"
+id="gaugeColorExp1"
+onchange="onGaugeColorChange('Exp1', gaugeColorExp1.value)" />
+<input type="color" class="form-control form-control-color me-2"
+id="gaugeColorExp2"
+onchange="onGaugeColorChange('Exp2', gaugeColorExp2.value)" />
+<button class="btn btn-outline-secondary" onclick="onResetGaugeColor('Exp')">
+<i class="bi bi-arrow-counterclockwise"></i>
+</button>
+</div>
+</div>
+<div class="col">
+<label class="form-label">when Max Level</label>
+<div class="d-flex">
+<input type="color" class="form-control form-control-color me-2"
+id="gaugeColorExpMaxed1"
+onchange="onGaugeColorChange('ExpMaxed1', gaugeColorExpMaxed1.value)" />
+<input type="color" class="form-control form-control-color me-2"
+id="gaugeColorExpMaxed2"
+onchange="onGaugeColorChange('ExpMaxed2', gaugeColorExpMaxed2.value)" />
+<button class="btn btn-outline-secondary"
+onclick="onResetGaugeColor('ExpMaxed')">
+<i class="bi bi-arrow-counterclockwise"></i>
+</button>
+</div>
+</div>
+<div class="col">
+<label class="form-label">Background Color</label>
+<div class="d-flex">
+<input type="color" class="form-control form-control-color me-2"
+id="gaugeBackgroundColorExp"
+onchange="onGaugeBackgroundColorChange('Exp', gaugeBackgroundColorExp.value)" />
+<button class="btn btn-outline-secondary"
+onclick="onResetGaugeBackgroundColor('Exp')">
+<i class="bi bi-arrow-counterclockwise"></i>
+</button>
+</div>
+</div>
+</div>
+
+<div class="d-flex mb-2">
+<button class="btn btn-outline-secondary me-2" onclick="undoMakeActorExpMaxedOut()">
+<i class="bi bi-eye me-2"></i>Regular
+</button>
+<button class="btn btn-outline-secondary me-2" onclick="makeActorExpMaxedOut()">
+<i class="bi bi-eye me-2"></i>Max Level
+</button>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="card">
+<h2 class="card-header d-flex justify-content-between collapsed" data-bs-toggle="collapse"
+data-bs-target="#actorStatusCollapsible">
+Actor HP, MP, TP
+<button class="btn btn-outline-secondary">
+<i class="bi bi-chevron-up arrow"></i>
+</button>
+</h2>
+<div class="card-body collapse" id="actorStatusCollapsible">
+
+<label class="form-label">Mode</label>
+<select class="form-select mb-4" id="showHpMode" onchange="onShowHpModeChange(this.value)">
+<option value="default">Show</option>
+<option value="none">Hide</option>
+</select>
+
+<div id="actorHpBox">
+<p class="info mb-4">
+You find more styles in the "Gauge Settings" section above.
+</p>
+
+<label class="form-label">Show MP?</label>
+<select class="form-select mb-4" id="showMpMode" onchange="changeText(this.id, this.value)">
+<option value="default">RPG Maker's Default</option>
+<option value="battleOnly">Only in battles</option>
+<option value="off">Never</option>
+</select>
+
+<label class="form-label">Show TP?</label>
+<select class="form-select mb-4" id="showTpMode" onchange="changeText(this.id, this.value)">
+<option value="default">RPG Maker's Default</option>
+<option value="on">Battle & menus</option>
+<option value="battleOnly">Only in battles</option>
+<option value="off">Never</option>
+</select>
+<p class="info">
+Use these Notetags on Actors or Classes to disable MP and TP for certain Heroes:
+</p>
+<div class="d-flex mb-4">
+<div class="custom-code">
+<p>&lt;No MP&gt;</p>
+<p>&lt;No TP&gt;</p>
+</div>
+</div>
+
+<hr>
+<div class="row mb-4">
+<div class="col">
+<label class="form-label">Horizontal Align</label>
+<div class="form-row">
+<div class="btn-group btn-group-lg">
+<button type="button" class="btn" id="hpGaugeHorzAlignLeft"
+onclick="onHpGaugeHorzAlign('left')">
+<i class="bi bi-align-start"></i>
+</button>
+<button type="button" class="btn" id="hpGaugeHorzAlignCenter"
+onclick="onHpGaugeHorzAlign('center')">
+<i class="bi bi-align-center"></i>
+</button>
+<button type="button" class="btn" id="hpGaugeHorzAlignRight"
+onclick="onHpGaugeHorzAlign('right')">
+<i class="bi bi-align-end"></i>
+</button>
+</div>
+</div>
+</div>
+<div class="col">
+<label class="form-label">Vertical Align</label>
+<div class="form-row">
+<div class="btn-group btn-group-lg">
+<button type="button" class="btn" id="hpGaugeVertAlignTop"
+onclick="onHpGaugeVertAlign('top')">
+<i class="bi bi-align-top"></i>
+</button>
+<button type="button" class="btn" id="hpGaugeVertAlignMiddle"
+onclick="onHpGaugeVertAlign('middle')">
+<i class="bi bi-align-middle"></i>
+</button>
+<button type="button" class="btn" id="hpGaugeVertAlignBottom"
+onclick="onHpGaugeVertAlign('bottom')">
+<i class="bi bi-align-bottom"></i>
+</button>
+</div>
+</div>
+</div>
+</div>
+<div class="row mb-4">
+<div class="col">
+<div class="input-group">
+<span class="input-group-text">x</span>
+<input class="form-control" type="number" id="hpGaugeX"
+onblur="changeNumber(this.id, this.value)" />
+</div>
+</div>
+<div class="col">
+<div class="input-group">
+<span class="input-group-text">y</span>
+<input class="form-control" type="number" id="hpGaugeY"
+onblur="changeNumber(this.id, this.value)" />
+</div>
+</div>
+<div class="col">
+<div class="input-group">
+<span class="input-group-text"><i class="bi bi-arrows"></i></span>
+<input class="form-control" type="number" id="hpGaugeWidth" placeholder="auto"
+onblur="changeNumber(this.id, this.value)" />
+</div>
+</div>
+<div class="col">
+<div class="input-group mz">
+<span class="input-group-text"><i class="bi bi-arrows-vertical"></i></span>
+<input class="form-control" type="number" id="hpGaugeHeight" placeholder="auto"
+onblur="changeNumber(this.id, this.value)" />
+</div>
+</div>
+</div>
+<label class="form-label">Vertical Space</label>
+<div class="row">
+<div class="col">
+<div class="input-group mb-2">
+<span class="input-group-text"><i class="bi bi-distribute-vertical"></i></span>
+<input type="number" class="form-control" id="hpGaugeVerticalSpace"
+onblur="changeNumber(this.id, this.value)" />
+</div>
+</div>
+<div class="col"></div>
+<div class="col"></div>
+<div class="col"></div>
+</div>
+
+<hr>
+
+<div class="mz">
+<div class="btn-group">
+<button class="btn" id="gaugeLabelStyleText"
+onclick="onGaugeLabelStyleChange('text')">
+<i class="bi bi-fonts me-2"></i>Text
+</button>
+<button class="btn" id="gaugeLabelStyleIcon"
+onclick="onGaugeLabelStyleChange('icon')">
+<i class="bi bi-heart me-2"></i>Icon
+</button>
+</div>
+</div>
+<div class="mv">
+<div class="btn-group">
+<button class="btn btn-primary" disabled>
+<i class="bi bi-fonts me-2"></i>Text
+</button>
+<button class="btn btn-outline-primary" disabled>
+<i class="bi bi-heart me-2"></i>Icon
+</button>
+</div>
+<p class="info mt-2">
+<span class="bi bi-info-square me-1"></span>
+MZ only
+</p>
+</div>
+
+<div id="gaugeLabelAsIconBox">
+<div class="input-group mt-4 mb-2">
+<span class="input-group-text" style="width: 3rem">HP</span>
+<input class="form-control" type="text" id="hpIconIndex" readonly
+style="width: 5rem; flex-grow: 0;">
+<button class="btn btn-outline-secondary choose-icon" data-target="#hpIconIndex"
+data-config-field="hpIconIndex">
+<i class="bi bi-box-arrow-up-right"></i>
+</button>
+</div>
+<div class="input-group mb-2">
+<span class="input-group-text" style="width: 3rem">MP</span>
+<input class="form-control" type="text" id="mpIconIndex" readonly
+style="width: 5rem; flex-grow: 0;">
+<button class="btn btn-outline-secondary choose-icon" data-target="#mpIconIndex"
+data-config-field="mpIconIndex">
+<i class="bi bi-box-arrow-up-right"></i>
+</button>
+</div>
+<div class="input-group">
+<span class="input-group-text" style="width: 3rem">TP</span>
+<input class="form-control" type="text" id="tpIconIndex" readonly
+style="width: 5rem; flex-grow: 0;">
+<button class="btn btn-outline-secondary choose-icon" data-target="#tpIconIndex"
+data-config-field="tpIconIndex">
+<i class="bi bi-box-arrow-up-right"></i>
+</button>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="card">
+<h2 class="card-header d-flex justify-content-between collapsed" data-bs-toggle="collapse"
+data-bs-target="#actorStatusEffects">
+Actor Status Effects
+<button class="btn btn-outline-secondary">
+<i class="bi bi-chevron-up arrow"></i>
+</button>
+</h2>
+<div class="card-body collapse" id="actorStatusEffects">
+<div class="row mb-4">
+<div class="col">
+<label class="form-label">Horizontal Align</label>
+<div class="form-row">
+<div class="btn-group btn-group-lg">
+<button type="button" class="btn" id="statusEffectsHorzAlignLeft"
+onclick="onStatusEffectsHorzAlign('left')">
+<i class="bi bi-align-start"></i>
+</button>
+<button type="button" class="btn" id="statusEffectsHorzAlignCenter"
+onclick="onStatusEffectsHorzAlign('center')">
+<i class="bi bi-align-center"></i>
+</button>
+<button type="button" class="btn" id="statusEffectsHorzAlignRight"
+onclick="onStatusEffectsHorzAlign('right')">
+<i class="bi bi-align-end"></i>
+</button>
+</div>
+</div>
+</div>
+<div class="col">
+<label class="form-label">Vertical Align</label>
+<div class="form-row">
+<div class="btn-group btn-group-lg">
+<button type="button" class="btn" id="statusEffectsVertAlignTop"
+onclick="onStatusEffectsVertAlign('top')">
+<i class="bi bi-align-top"></i>
+</button>
+<button type="button" class="btn" id="statusEffectsVertAlignMiddle"
+onclick="onStatusEffectsVertAlign('middle')">
+<i class="bi bi-align-middle"></i>
+</button>
+<button type="button" class="btn" id="statusEffectsVertAlignBottom"
+onclick="onStatusEffectsVertAlign('bottom')">
+<i class="bi bi-align-bottom"></i>
+</button>
+</div>
+</div>
+</div>
+</div>
+<div class="row mb-4">
+<div class="col">
+<div class="input-group">
+<span class="input-group-text">x</span>
+<input class="form-control" type="number" id="statusEffectsX"
+onblur="onStatusEffectsXChange(statusEffectsX.value)" />
+</div>
+</div>
+<div class="col">
+<div class="input-group">
+<span class="input-group-text">y</span>
+<input class="form-control" type="number" id="statusEffectsY"
+onblur="onStatusEffectsYChange(statusEffectsY.value)" />
+</div>
+</div>
+</div>
+<label class="form-label">Icon Limit</label>
+<input class="form-control mb-4" type="number" id="statusEffectsMaxIcons" min="1"
+placeholder="8" style="width: 100px"
+onblur="onStatusEffectsMaxIconsChange(statusEffectsMaxIcons.value)" />
+
+<div class="d-flex">
+<button class="btn btn-outline-secondary me-2" onclick="applyStates()">
+<i class="bi bi-eye me-2"></i>Apply Status Effects
+</button>
+<button class="btn btn-outline-secondary me-2" onclick="clearStates()">
+<i class="bi bi-eye me-2"></i>Clear Status Effects
+</button>
+</div>
+</div>
+</div>
+
+<div class="card">
+<h2 class="card-header d-flex justify-content-between collapsed" data-bs-toggle="collapse"
+data-bs-target="#actorCustomCollapsible">
+Actor Custom Parameter
+<button class="btn btn-outline-secondary">
+<i class="bi bi-chevron-up arrow"></i>
+</button>
+</h2>
+<div class="card-body collapse" id="actorCustomCollapsible">
+<label class="form-check form-switch mb-4">
+<input class="form-check-input" type="checkbox" id="enableCustomParameter" checked
+onchange="onEnableCustomParameterChange(enableCustomParameter.checked)" />
+<span class="form-check-label">Enable?</span>
+</label>
+<div id="customParameterBox">
+<label class="form-check form-switch mb-4">
+<input class="form-check-input" type="checkbox" id="showCustomParameterInOtherScenes"
+onchange="onShowCustomParameterInOtherScenesChange(this.checked)" />
+<span class="form-check-label">Show in other Menus? (e.g. Item Menu, Skill Menu)</span>
+</label>
+<label class="form-label">Mode</label>
+<select class="form-select mb-4" id="customParameterMode"
+onchange="onCustomParameterModeChange(customParameterMode.value)">
+<option value="gauge" class="mz">Gauge</option>
+<option value="x-y">X/Y values</option>
+<option value="number">Single number</option>
+<option value="text">Freestyle Text</option>
+</select>
+<div class="mb-4" id="customParameterLabelBox">
+<label class="form-label">Label</label>
+<div class="d-flex align-items-end">
+<div class="me-4" style="width: 5rem;">
+<input class="form-control" id="customParameterLabel"
+onblur="onCustomParameterLabelChange(customParameterLabel.value)">
+</div>
+<div style="width: 6rem;">
+<div class="input-group">
+<span class="input-group-text" id="customParameterLabelTextColorSpan" style="
+font-size: larger;
+text-decoration: underline;
+text-decoration-thickness: 4px;
+  ">
+A
+</span>
+<select class="input-group-text form-select my-color-picker"
+id="customParameterLabelTextColor"
+onchange="onTextColorChange('customParameterLabel', customParameterLabelTextColor.value)"></select>
+</div>
+</div>
+</div>
+</div>
+<label class="form-label">Pre-Condition</label>
+<div class="input-group">
+<span class="input-group-text">JS</span>
+<input class="form-control" id="customParameterPreconditionEval"
+onblur="onCustomParameterPreconditionEvalChange(customParameterPreconditionEval.value)">
+</div>
+<p class="info">
+Leave this field blank to always display the custom parameter or write a short function
+that must return truthy.
+</p>
+<p class="info">Examples:</p>
+<ul class="custom-code mb-4">
+<li>actor.name() == 'Reid'</li>
+<li>actor.isClass($dataClasses[1])</li>
+<li>$gameSwitches.value(1)</li>
+</ul>
+<div class="mb-4" id="customParameterXYValuesBox">
+<label class="form-label">Current Value</label>
+<div class="input-group mb-4">
+<span class="input-group-text">JS</span>
+<input class="form-control" id="customParameterCurrentValueEval"
+onblur="onCustomParameterCurrentValueEvalChange(customParameterCurrentValueEval.value)">
+</div>
+<label class="form-label">Max Value</label>
+<div class="input-group mb-4">
+<span class="input-group-text">JS</span>
+<input class="form-control" id="customParameterMaxValueEval"
+onblur="onCustomParameterMaxValueEvalChange(customParameterMaxValueEval.value)">
+</div>
+<p class="info">Examples:</p>
+<ul class="custom-code">
+<li>actor.luk</li>
+<li>actor.param(1)</li>
+</ul>
+</div>
+<div id="customParameterShowMaxValueBox">
+<label class="form-check form-switch mb-4 mz">
+<input class="form-check-input" type="checkbox"
+id="showCustomParameterGaugeMaxValues"
+onchange="onShowCustomParameterGaugeMaxValuesChange(showCustomParameterGaugeMaxValues.checked)" />
+<span class="form-check-label">Show Max Value?</span>
+</label>
+</div>
+<div class="mb-4" id="customParameterNumberEvalBox">
+<label class="form-label">Eval</label>
+<div class="input-group mb-4">
+<span class="input-group-text">JS</span>
+<input class="form-control" id="customParameterNumberEval"
+onblur="onCustomParameterNumberEvalChange(customParameterNumberEval.value)">
+</div>
+<p class="info">Examples:</p>
+<ul class="custom-code">
+<li>actor.luk</li>
+<li>actor.param(1)</li>
+</ul>
+</div>
+<div class="mb-4" id="customParameterTextEvalBox">
+<label class="form-label">Text to display</label>
+<div class="input-group mb-4">
+<span class="input-group-text">JS</span>
+<input class="form-control" id="customParameterTextEval"
+onblur="onCustomParameterTextEvalChange(customParameterTextEval.value)">
+</div>
+<p class="info">
+You may use Text Codes, however, you need to escape them.
+\C becomes \\C.
+</p>
+<p class="info">Examples:</p>
+<ul class="custom-code">
+<li>"\\C[16]Freestyle Text"</li>
+<li>actor.currentClass().name</li>
+<li>"\\C[16] " + $gameVariables.value(1)</li>
+</ul>
+</div>
+<hr>
+<div class="row mb-4">
+<div class="col">
+<label class="form-label">Horizontal Align</label>
+<div class="form-row">
+<div class="btn-group btn-group-lg">
+<button type="button" class="btn" id="customParameterHorzAlignLeft"
+onclick="onCustomParameterHorzAlign('left')">
+<i class="bi bi-align-start"></i>
+</button>
+<button type="button" class="btn" id="customParameterHorzAlignCenter"
+onclick="onCustomParameterHorzAlign('center')">
+<i class="bi bi-align-center"></i>
+</button>
+<button type="button" class="btn" id="customParameterHorzAlignRight"
+onclick="onCustomParameterHorzAlign('right')">
+<i class="bi bi-align-end"></i>
+</button>
+</div>
+</div>
+</div>
+<div class="col">
+<label class="form-label">Vertical Align</label>
+<div class="form-row">
+<div class="btn-group btn-group-lg">
+<button type="button" class="btn" id="customParameterVertAlignTop"
+onclick="onCustomParameterVertAlign('top')">
+<i class="bi bi-align-top"></i>
+</button>
+<button type="button" class="btn" id="customParameterVertAlignMiddle"
+onclick="onCustomParameterVertAlign('middle')">
+<i class="bi bi-align-middle"></i>
+</button>
+<button type="button" class="btn" id="customParameterVertAlignBottom"
+onclick="onCustomParameterVertAlign('bottom')">
+<i class="bi bi-align-bottom"></i>
+</button>
+</div>
+</div>
+</div>
+</div>
+<div class="row mb-4">
+<div class="input-group col">
+<span class="input-group-text">x</span>
+<input type="number" class="form-control" id="customParameterOffsetX"
+onblur="onCustomParameterOffsetXChange(customParameterOffsetX.value)" />
+</div>
+<div class="input-group col">
+<span class="input-group-text">y</span>
+<input type="number" class="form-control" id="customParameterOffsetY"
+onblur="onCustomParameterOffsetYChange(customParameterOffsetY.value)" />
+</div>
+<div class="input-group col">
+<span class="input-group-text"><i class="bi bi-arrows"></i></span>
+<input type="number" class="form-control" id="customParameterWidth"
+onblur="onCustomParameterWidthChange(customParameterWidth.value)" />
+</div>
+<div class="col">
+<div class="input-group" id="customParameterHeightBox">
+<span class="input-group-text"><i class="bi bi-arrows-vertical"></i></span>
+<input type="number" class="form-control" id="customParameterHeight"
+onblur="onCustomParameterHeightChange(customParameterHeight.value)" />
+</div>
+</div>
+</div>
+<hr>
+<div class="mb-4" id="customParameterTextAlignBox">
+<label class="form-label">Text Align</label>
+<div class="form-row">
+<div class="btn-group">
+<button type="button" class="btn" id="customParameterTextAlignLeft"
+onclick="onCustomParameterTextAlign('left')">
+<i class="bi bi-text-left"></i> Left
+</button>
+<button type="button" class="btn" id="customParameterTextAlignCenter"
+onclick="onCustomParameterTextAlign('center')">
+<i class="bi bi-text-center"></i> Center
+</button>
+<button type="button" class="btn" id="customParameterTextAlignRight"
+onclick="onCustomParameterTextAlign('right')">
+<i class="bi bi-text-right"></i> Right
+</button>
+</div>
+</div>
+</div>
+<div class="d-flex mb-4">
+<div class="d-flex flex-column me-4">
+<label class="form-label">Text Color</label>
+<div class="input-group">
+<span class="input-group-text" id="customParameterTextColorSpan" style="
+font-size: larger;
+text-decoration: underline;
+text-decoration-thickness: 4px;
+  ">
+A
+</span>
+<select class="input-group-text form-select my-color-picker" style="width: 3rem"
+id="customParameterTextColor"
+onchange="onTextColorChange('customParameter', customParameterTextColor.value)"></select>
+</div>
+</div>
+<div id="customParameterWhenEmptyTextColorBox">
+<div class="d-flex flex-column me-4">
+<label class="form-label">When Depleted</label>
+<div class="input-group">
+<span class="input-group-text" id="customParameterWhenEmptyTextColorSpan"
+style="
+font-size: larger;
+text-decoration: underline;
+text-decoration-thickness: 4px;
+  ">
+A
+</span>
+<select class="input-group-text form-select my-color-picker"
+style="width: 3rem" id="customParameterWhenEmptyTextColor"
+onchange="onTextColorChange('customParameterWhenEmpty', customParameterWhenEmptyTextColor.value)"></select>
+</div>
+</div>
+</div>
+</div>
+<div class="mb-4" id="customParameterGaugeBox">
+<div class="d-flex">
+<div class="me-4">
+<label class="form-label">Gauge Color</label>
+<div class="d-flex">
+<input type="color" class="form-control form-control-color me-2"
+id="gaugeColorCustom1"
+onchange="onGaugeColorChange('Custom1', gaugeColorCustom1.value)" />
+<input type="color" class="form-control form-control-color me-2"
+id="gaugeColorCustom2"
+onchange="onGaugeColorChange('Custom2', gaugeColorCustom2.value)" />
+<button class="btn btn-outline-secondary"
+onclick="onResetGaugeColor('Custom')">
+<i class="bi bi-arrow-counterclockwise"></i>
+</button>
+</div>
+</div>
+<div>
+<label class="form-label">Back Color</label>
+<div class="d-flex">
+<input type="color" class="form-control form-control-color me-2"
+id="gaugeBackgroundColorCustom"
+onchange="onGaugeBackgroundColorChange('Custom', gaugeBackgroundColorCustom.value)" />
+<button class="btn btn-outline-secondary"
+onclick="onResetGaugeBackgroundColor('Custom')">
+<i class="bi bi-arrow-counterclockwise"></i>
+</button>
+</div>
+</div>
+</div>
+</div>
+<div id="customParameterFontSizeBox">
+<label class="form-label">Font Size</label>
+<div class="input-group mb-4" style="width: 200px;">
+<span class="input-group-text"><i class="bi bi-fonts"></i></span>
+<input class="form-control" type="number" id="customParameterFontSize"
+onblur="onCustomParameterFontSizeChange(customParameterFontSize.value)" />
+</div>
+</div>
+</div>
+</div>
+</div>
+
+<h4 class="mt-xl">Other Windows</h4>
+<div class="card">
+<h2 class="card-header d-flex justify-content-between collapsed" data-bs-toggle="collapse"
+data-bs-target="#commandCommand">
+Command Window
+<button class="btn btn-outline-secondary">
+<i class="bi bi-chevron-up arrow"></i>
+</button>
+</h2>
+<div class="card-body collapse" id="commandCommand">
+<div class="input-group mb-2">
+<span class="input-group-text" style="width: 200px">
+<i class="bi bi-transparency me-2"></i>Opacity
+</span>
+<input class="form-control" style="flex-grow: 0; flex-basis: 5rem" type="number"
+id="commandOpacity" onblur="changeNumber(this.id, this.value)" />
+</div>
+<div class="input-group mb-2">
+<span class="input-group-text" style="width: 200px">
+<i class="bi bi-square me-2"></i>Padding
+</span>
+<input class="form-control" style="flex-grow: 0; flex-basis: 5rem;" type="number"
+id="commandPadding" onblur="changeNumber(this.id, this.value)" />
+</div>
+<div class="input-group mb-2">
+<span class="input-group-text" style="width: 200px">
+<i class="bi bi-arrows-vertical me-2"></i>
+Item Height
+</span>
+<input class="form-control" style="flex-grow: 0; flex-basis: 5rem" type="number"
+id="commandItemHeight" onblur="changeNumber(this.id, this.value)" />
+</div>
+<div class="input-group mb-2">
+<span class="input-group-text" style="width: 200px">
+<i class="bi bi-arrows-vertical me-2"></i>
+Item Spacing
+</span>
+<input class="form-control" style="flex-grow: 0; flex-basis: 5rem" type="number"
+id="commandRowSpacing" onblur="changeNumber(this.id, this.value)" />
+</div>
+<div class="input-group mb-2">
+<span class="input-group-text" style="width: 200px">
+<i class="bi bi-arrows me-2"></i>
+Item Spacing
+</span>
+<input class="form-control" style="flex-grow: 0; flex-basis: 5rem" type="number"
+id="commandColumnSpacing" onblur="changeNumber(this.id, this.value)" />
+</div>
+<div class="input-group mb-2">
+<span class="input-group-text" style="width: 200px">
+<i class="bi bi-fonts me-2"></i>Font Size
+</span>
+<input class="form-control" style="flex-grow: 0; flex-basis: 5rem" type="number"
+id="commandFontSize" onblur="changeNumber(this.id, this.value)" />
+</div>
+<hr />
+<label class="form-label">Style</label>
+<select class="form-select mb-2" id="commandStyle"
+onchange="onCommandStyleChange(commandStyle.value)">
+<option value="iconAndText">Icon and Text</option>
+<option value="icon">Icon only</option>
+<option value="text">Text only</option>
+</select>
+<p class="info mb-4">Icons are configured in the Plugin Manager.</p>
+<label class="form-label">Text Align</label>
+<div class="form-row mb-4">
+<div class="btn-group">
+<button type="button" class="btn" id="commandTextAlignLeft"
+onclick="onCommandTextAlign('left')">
+<i class="bi bi-text-left me-2"></i>Left
+</button>
+<button type="button" class="btn" id="commandTextAlignCenter"
+onclick="onCommandTextAlign('center')">
+<i class="bi bi-text-center me-2"></i>Center
+</button>
+<button type="button" class="btn" id="commandTextAlignRight"
+onclick="onCommandTextAlign('right')">
+<i class="bi bi-text-right me-2"></i>Right
+</button>
+</div>
+</div>
+<div class="row align-items-start mb-4">
+<div class="col">
+<label class="form-check form-switch mb-4" id="shouldOverrideCommandWindowBox">
+<input class="form-check-input" type="checkbox" id="shouldOverrideCommandWindow"
+onchange="onOverrideCommandWindowChange(shouldOverrideCommandWindow.checked)" />
+<span class="form-check-label">Individual Window File?</span>
+</label>
+</div>
+<div class="col">
+<div id="commandWindowFileBox">
+<input class="form-control" type="file" id="commandWindowFile" accept="image/png"
+onchange="changeFile(this.id, 'img', this.value)" />
+<p class="info mb-0">
+File must be located in your game/img/system
+</p>
+</div>
+</div>
+</div>
+<div class="row align-items-end mb-4">
+<div class="col">
+<label class="form-label">Window Background</label>
+<select class="form-select" id="commandBackgroundType"
+onchange="onCommandBackgroundTypeChange(commandBackgroundType.value)">
+<option value="window">Window</option>
+<option value="dimmed">Dimmed</option>
+<option value="image">Image</option>
+<option value="none">None</option>
+</select>
+</div>
+<div class="col">
+<div id="commandBackgroundFileBox">
+<input class="form-control" type="file" id="commandBackgroundFile"
+accept="image/png" onchange="changeFile(this.id, 'img', this.value)" />
+<p class="info mb-0">
+File must be located in your game directory/img
+</p>
+</div>
+</div>
+</div>
+<div class="row mz">
+<div class="col">
+<label class="form-label">Item Background</label>
+<select class="form-select" id="commandItemBackgroundType"
+onchange="onCommandItemBackgroundTypeChange(this.value)">
+<option value="default">Default</option>
+<option value="dimmed">RPG Maker Default</option>
+<option value="image">Image</option>
+<option value="none">None</option>
+</select>
+</div>
+<div class="col">
+<div id="commandItemBackgroundFileBox">
+<input class="form-control" type="file" id="commandItemBackgroundFile"
+accept="image/png" onchange="changeFile(this.id, 'img', this.value)" />
+<p class="info mb-0">
+File must be located in your game directory/img
+</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="card">
+<h2 class="card-header d-flex justify-content-between collapsed" data-bs-toggle="collapse"
+data-bs-target="#addWindows">
+Gold & Game Info Window
+<button class="btn btn-outline-secondary">
+<i class="bi bi-chevron-up arrow"></i>
+</button>
+</h2>
+<div class="card-body collapse" id="addWindows">
+<label class="form-check form-switch mb-4">
+<input class="form-check-input" type="checkbox" id="showGoldWindow" checked
+onchange="onShowGoldChange(showGoldWindow.checked)" />
+<span class="form-check-label">Show?</span>
+</label>
+<div id="goldWindowBox">
+<div class="row mb-4">
+<div class="col">
+<textarea class="form-control" rows="3" id="gameInfoTextLeft"
+onblur="onGameInfoTextLeftChange(gameInfoTextLeft.value)"></textarea>
+</div>
+<div class="col">
+<textarea class="form-control" rows="3" id="gameInfoTextRight"
+onblur="onGameInfoTextRightChange(gameInfoTextRight.value)"></textarea>
+</div>
+</div>
+<p class="info">
+You may use Text Codes (e.g. \V[1], \C[2], ...). Use
+<ul>
+<li class="info">\$ for current gold</li>
+<li class="info">\MN for map name</li>
+<li class="info">\PT for playtime</li>
+<li class="info">\V[1] for Variable 1</li>
+</ul>
+</p>
+<button class="btn btn-link mz"
+onclick="window.open('http://www.yanfly.moe/wiki/Category:Text_Codes_(MZ)')">
+Lookup all Text Codes
+<i class="bi bi-box-arrow-up-right ms-2"></i>
+</button>
+<button class="btn btn-link mv"
+onclick="window.open('http://www.yanfly.moe/wiki/Category:Text_Codes_(MV)')">
+Lookup all Text Codes
+<i class="bi bi-box-arrow-up-right ms-2"></i>
+</button>
+<hr>
+<div class="row align-items-end mt-4 mb-4">
+<div class="col">
+<label class="form-label">Unknown Map Reference</label>
+<input class="form-control" type="text" id="unknownMapName"
+placeholder="Unknown Region" onblur="changeText(this.id, this.value)" />
+</div>
+<div class="col info">
+Text to show when the current Map has no Display Name
+</div>
+</div>
+<label class="form-label">Font Size</label>
+<div class="input-group mb-4" style="width: 200px;">
+<span class="input-group-text"><i class="bi bi-fonts"></i></span>
+<input class="form-control" type="number" id="goldFontSize"
+onblur="changeNumber(this.id, this.value)" />
+</div>
+<div class="row align-items-end mb-4">
+<div class="col">
+<label class="form-label">Background</label>
+<select class="form-select" id="goldBackgroundType"
+onchange="onGoldBackgroundTypeChange(goldBackgroundType.value)">
+<option value="window">Window</option>
+<option value="dimmed">Dimmed</option>
+<option value="image">Image</option>
+<option value="none">None</option>
+</select>
+</div>
+<div class="col">
+<div id="goldBackgroundFileBox">
+<input class="form-control" type="file" id="goldBackgroundFile"
+accept="image/png" onchange="changeFile(this.id, 'img', this.value)" />
+<p class="info mb-0">
+File must be located in your game directory/img
+</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="mt-xl">
+<div class="d-flex align-items-end gap-4">
+<h4 class="mb-1">Target Actor Window</h4>
+<button type="button" class="btn btn-outline-light" onclick="openCloseTargetActorWindow()">
+<i class="bi bi-eye me-2"></i>
+Open/Close Target Actor Window
+</button>
+</div>
+</div>
+<div class="card">
+<h2 class="card-header d-flex justify-content-between collapsed" data-bs-toggle="collapse"
+data-bs-target="#targetActorWindowCard1">
+General
+<button class="btn btn-outline-secondary">
+<i class="bi bi-chevron-up arrow"></i>
+</button>
+</h2>
+<div class="card-body collapse" id="targetActorWindowCard1">
+
+<label class="form-label">Width</label>
+<div class="input-group mb-4" style="width: 10rem;">
+<input class="form-control" type="number" id="targetActorWindowWidthPercentage"
+placeholder="70" onblur="changeNumber(this.id, this.value)">
+<span class="input-group-text">%</span>
+</div>
+<label class="form-label">Height</label>
+<div class="input-group mb-2" style="width: 10rem;">
+<input class="form-control" type="number" id="targetActorWindowHeightPercentage"
+placeholder="100" onblur="changeNumber(this.id, this.value)">
+<span class="input-group-text">%</span>
+</div>
+<p class="info mb-4">Relative to window screen (excluding Touch UI Button Area)</p>
+
+<label class="form-label">Horizontal Position</label>
+<select class="form-select" id="targetActorWindowHorzAlignMode"
+onchange="changeText(this.id, this.value)">
+<option value="default">Left/Right (RPG Maker default)</option>
+<option value="center">Center</option>
+</select>
+<p class="info mb-4">Not reflected here, but it will be in the respective menus.</p>
+
+<label class="form-label">Vertical Align</label>
+<div class="form-row mb-4">
+<div class="btn-group btn-group-lg">
+<button type="button" class="btn" id="targetActorWindowVertAlignTop"
+onclick="onTargetActorWindowVertAlign('top')">
+<i class="bi bi-align-top"></i>
+</button>
+<button type="button" class="btn" id="targetActorWindowVertAlignMiddle"
+onclick="onTargetActorWindowVertAlign('middle')">
+<i class="bi bi-align-middle"></i>
+</button>
+<button type="button" class="btn" id="targetActorWindowVertAlignBottom"
+onclick="onTargetActorWindowVertAlign('bottom')">
+<i class="bi bi-align-bottom"></i>
+</button>
+</div>
+</div>
+
+<label class="form-label">Orientation</label>
+<div class="form-row mb-4">
+<div class="btn-group">
+<button type="button" class="btn" id="targetActorWindowOrientationDefault"
+onclick="onTargetActorWindowOrientationChange('default')">
+<i class="bi bi-x-lg me-2"></i>Don't change
+</button>
+<button type="button" class="btn" id="targetActorWindowOrientationRows"
+onclick="onTargetActorWindowOrientationChange('rows')">
+<i class="bi bi-layout-three-columns rotate-90 me-2"></i>Rows
+</button>
+<button type="button" class="btn" id="targetActorWindowOrientationColumns"
+onclick="onTargetActorWindowOrientationChange('columns')">
+<i class="bi bi-layout-three-columns me-2"></i>Columns
+</button>
+<button type="button" class="btn" id="targetActorWindowOrientationGrid"
+onclick="onTargetActorWindowOrientationChange('grid')">
+<i class="bi bi-grid rotate-90 me-2"></i>Grid
+</button>
+</div>
+</div>
+
+<div class="d-flex gap-4 mb-4">
+<div>
+<label class="form-label">Columns</label>
+<input type="number" class="form-control" style="width: 6rem;"
+id="targetActorWindowCols" placeholder="2" min="1" max="10"
+onblur="changeNumber(this.id, this.value)">
+</div>
+<div>
+<label class="form-label">Rows</label>
+<input type="number" class="form-control" style="width: 6rem;"
+id="targetActorWindowRows" placeholder="2" min="1" max="10"
+onblur="changeNumber(this.id, this.value)">
+</div>
+</div>
+
+<label class="form-label">Background Type</label>
+<select class="form-select mb-4" id="targetActorWindowBackgroundType"
+onchange="changeText(this.id, this.value)">
+<option value="default">Don't change</option>
+<option value="window">Window</option>
+<option value="dimmed">Dimmed</option>
+<option value="image">Image</option>
+<option value="none">None</option>
+</select>
+
+</div>
+</div>
+
+<div class="card">
+<h2 class="card-header d-flex justify-content-between collapsed" data-bs-toggle="collapse"
+data-bs-target="#targetActorWindowCard2">
+Actor related
+<button class="btn btn-outline-secondary">
+<i class="bi bi-chevron-up arrow"></i>
+</button>
+</h2>
+<div class="card-body collapse" id="targetActorWindowCard2">
+
+<label class="form-label">Actor Portrait</label>
+<select class="form-select mb-4" id="targetActorPortraitMode"
+onchange="changeText(this.id, this.value)">
+<option value="default">Don't change</option>
+<option value="face">Face</option>
+<option value="battler">SV Battler</option>
+<option value="mapSprite">Map Sprite</option>
+<option value="portrait">Custom Image</option>
+<option value="none">None</option>
+</select>
+
+<label class="form-label">Portrait Position</label>
+<select class="form-select mb-4" id="targetActorPortraitPosition"
+onchange="changeText(this.id, this.value)">
+<option value="default">Don't change</option>
+<option value="topLeft">Top Left</option>
+<option value="topCenter">Top Center</option>
+<option value="topRight">Top Right</option>
+<option value="middleLeft">Middle Left</option>
+<option value="middleCenter">Middle Center</option>
+<option value="middleRight">Middle Right</option>
+<option value="bottomLeft">Bottom Left</option>
+<option value="bottomCenter">Bottom Center</option>
+<option value="bottomRight">Bottom Right</option>
+</select>
+
+<div class="row mb-4">
+<div class="col">
+<div class="input-group">
+<span class="input-group-text">x</span>
+<input class="form-control" type="number" id="targetActorPortraitOffsetX"
+placeholder="keep" onblur="changeNumber(this.id, this.value)" />
+</div>
+</div>
+<div class="col">
+<div class="input-group">
+<span class="input-group-text">y</span>
+<input class="form-control" type="number" id="targetActorPortraitOffsetY"
+placeholder="keep" onblur="changeNumber(this.id, this.value)" />
+</div>
+</div>
+<div class="col">
+<div class="input-group">
+<span class="input-group-text"><i class="bi bi-arrows-angle-expand"></i></span>
+<input class="form-control" type="number" id="targetActorPortraitScale"
+placeholder="keep" onblur="changeNumber(this.id, this.value)" />
+<span class="input-group-text">%</span>
+</div>
+</div>
+</div>
+
+<label class="form-label">Name Position</label>
+<select class="form-select mb-4" id="targetActorNamePosition"
+onchange="changeText(this.id, this.value)">
+<option value="default">Don't change</option>
+<option value="topLeft">Top Left</option>
+<option value="topCenter">Top Center</option>
+<option value="topRight">Top Right</option>
+<option value="middleLeft">Middle Left</option>
+<option value="middleCenter">Middle Center</option>
+<option value="middleRight">Middle Right</option>
+<option value="bottomLeft">Bottom Left</option>
+<option value="bottomCenter">Bottom Center</option>
+<option value="bottomRight">Bottom Right</option>
+</select>
+
+<div class="row mb-4">
+<div class="col">
+<div class="input-group">
+<span class="input-group-text">x</span>
+<input class="form-control" type="number" id="targetActorNameOffsetX"
+placeholder="keep" onblur="changeNumber(this.id, this.value)" />
+</div>
+</div>
+<div class="col">
+<div class="input-group">
+<span class="input-group-text">y</span>
+<input class="form-control" type="number" id="targetActorNameOffsetY"
+placeholder="keep" onblur="changeNumber(this.id, this.value)" />
+</div>
+</div>
+<div class="col">
+<div class="input-group">
+<span class="input-group-text"><i class="bi bi-arrows"></i></span>
+<input class="form-control" type="number" id="targetActorNameWidth"
+placeholder="keep" onblur="changeNumber(this.id, this.value)" />
+</div>
+</div>
+</div>
+
+<label class="form-label">Text Align</label>
+<div class="form-row mb-4">
+<div class="btn-group">
+<button type="button" class="btn" id="targetActorNameTextAlignDefault"
+onclick="onTargetActorNameTextAlignChange('default')">
+<i class="bi bi-x-lg me-2"></i>Don't change
+</button>
+<button type="button" class="btn" id="targetActorNameTextAlignLeft"
+onclick="onTargetActorNameTextAlignChange('left')">
+<i class="bi bi-text-left me-2"></i>Left
+</button>
+<button type="button" class="btn" id="targetActorNameTextAlignCenter"
+onclick="onTargetActorNameTextAlignChange('center')">
+<i class="bi bi-text-center me-2"></i>Center
+</button>
+<button type="button" class="btn" id="targetActorNameTextAlignRight"
+onclick="onTargetActorNameTextAlignChange('right')">
+<i class="bi bi-text-right me-2"></i>Right
+</button>
+</div>
+</div>
+
+<label class="form-label">HP/MP/TP Position</label>
+<select class="form-select mb-4" id="targetActorHpMpTpPosition"
+onchange="changeText(this.id, this.value)">
+<option value="default">Don't change</option>
+<option value="topLeft">Top Left</option>
+<option value="topCenter">Top Center</option>
+<option value="topRight">Top Right</option>
+<option value="middleLeft">Middle Left</option>
+<option value="middleCenter">Middle Center</option>
+<option value="middleRight">Middle Right</option>
+<option value="bottomLeft">Bottom Left</option>
+<option value="bottomCenter">Bottom Center</option>
+<option value="bottomRight">Bottom Right</option>
+</select>
+
+<div class="row mb-4">
+<div class="col">
+<div class="input-group">
+<span class="input-group-text">x</span>
+<input class="form-control" type="number" id="targetActorHpMpTpOffsetX"
+placeholder="keep" onblur="changeNumber(this.id, this.value)" />
+</div>
+</div>
+<div class="col">
+<div class="input-group">
+<span class="input-group-text">y</span>
+<input class="form-control" type="number" id="targetActorHpMpTpOffsetY"
+placeholder="keep" onblur="changeNumber(this.id, this.value)" />
+</div>
+</div>
+<div class="col">
+<div class="input-group">
+<span class="input-group-text"><i class="bi bi-arrows"></i></span>
+<input class="form-control" type="number" id="targetActorHpMpTpWidth"
+placeholder="keep" onblur="changeNumber(this.id, this.value)" />
+</div>
+</div>
+</div>
+
+<label class="form-label">Status Effects Position</label>
+<select class="form-select mb-4" id="targetActorStatusEffectsPosition"
+onchange="changeText(this.id, this.value)">
+<option value="default">Don't change</option>
+<option value="topLeft">Top Left</option>
+<option value="topCenter">Top Center</option>
+<option value="topRight">Top Right</option>
+<option value="middleLeft">Middle Left</option>
+<option value="middleCenter">Middle Center</option>
+<option value="middleRight">Middle Right</option>
+<option value="bottomLeft">Bottom Left</option>
+<option value="bottomCenter">Bottom Center</option>
+<option value="bottomRight">Bottom Right</option>
+</select>
+
+<div class="row mb-4">
+<div class="col">
+<div class="input-group">
+<span class="input-group-text">x</span>
+<input class="form-control" type="number" id="targetActorStatusEffectsOffsetX"
+placeholder="keep" onblur="changeNumber(this.id, this.value)" />
+</div>
+</div>
+<div class="col">
+<div class="input-group">
+<span class="input-group-text">y</span>
+<input class="form-control" type="number" id="targetActorStatusEffectsOffsetY"
+placeholder="keep" onblur="changeNumber(this.id, this.value)" />
+</div>
+</div>
+<div class="col"></div>
+</div>
+
+<div class="d-flex">
+<button class="btn btn-outline-secondary me-2" onclick="applyStates()">
+<i class="bi bi-eye me-2"></i>Apply Status Effects
+</button>
+<button class="btn btn-outline-secondary me-2" onclick="clearStates()">
+<i class="bi bi-eye me-2"></i>Clear Status Effects
+</button>
+</div>
+
+</div>
+</div>
+
+</div>
+
+<div class="card-footer">
+<button type="button" class="btn btn-outline-danger" onclick="onRestoreDefaults()">
+Restore Defaults
+</button>
+</div>
+
+</div>
+</div>
+
+<div class="modal fade" id="iconPickerModal" tabindex="-1">
+<style>
+#icon-selector {
+position: relative;
+display: inline-block;
+border-radius: 8px;
+overflow: hidden;
+}
+
+#highlight {
+position: absolute;
+width: 32px;
+height: 32px;
+border: 3px solid #bf0909;
+box-sizing: border-box;
+pointer-events: none;
+display: none;
+background-color: rgba(13, 110, 253, 0.1);
+}
+
+.result-box {
+font-size: 1.1rem;
+font-weight: 500;
+}
+</style>
+<div class="modal-dialog modal-dialog-centered" style="max-width: 90vw; width: 90vw;">
+<div class="modal-content">
+
+<div class="modal-header">
+<button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+</div>
+
+<div class="modal-body d-flex align-items-center justify-content-center">
+
+<div style="width: 512px" class="d-flex flex-column align-items-center">
+
+<div class="alert alert-light mt-4 mb-4">
+<span class="bi bi-lightbulb"></span>
+Tip: Double-click an icon to select & close dialog.
+</div>
+
+<div id="icon-selector" class="position-relative d-inline-block border rounded">
+<img id="iconSprite" src="../img/system/IconSet.png" alt="Icons">
+<div id="highlight"></div>
+</div>
+
+</div>
+</div>
+
+<div class="modal-footer">
+<button class="btn btn-primary" onclick="onChooseIconConfirm()">Confirm</button>
+<button class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>
+</div>
+
+</div>
+</div>
+</div>
+</body>
