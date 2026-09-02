@@ -46,5 +46,6 @@ var $plugins =
 {"name":"LIYAB_VO","status":true,"description":"[v1.0] LIYAB VO - Play voice-over SEs from audio/se/ subfolders via \\vo[path] message code.","parameters":{}},
 {"name":"GALV_MessageSoundEffects","status":true,"description":"Play sound effects when during Show Text event commands.","parameters":{"Delay Time":"6","Default Talk SE":"Cursor1,80,150","Default Confirm SE":"Cursor2,80,150","-----------":"","Quick SE 1":"Cursor2,100,80","Quick SE 2":"Cursor2,100,130","Quick SE 3":"","Quick SE 4":""}},
 {"name":"VS221_OffscreenTracker","status":true,"description":"Offscreen Tracker system with horizontal lock and dynamic distance display.","parameters":{"EdgePadding":"35","ScreenSafeGap":"40","ContentGap":"40","TextIconGap":"5","ArrowScale":"1.0","IconScale":"1.0","FontSize":"18","ArrowImage":"ArrowTrack","ShowDistance":"true","DistanceUnit":"m","MaxVisDistance":"0","HideAtDistance":"1.5","AlwaysShow":"true"}},
-{"name":"WeaponSkill","status":true,"description":"Change skill id of attack for each weapon.","parameters":{}}
+{"name":"WeaponSkill","status":true,"description":"Change skill id of attack for each weapon.","parameters":{}},
+{"name":"LIYAB_PathMove","status":true,"description":"v1.0 Pathfind the player and/or events to a tile, walking only on the road/path tile family (the tile Event 2 stands on).","parameters":{"Road Tile Min":"2800","Road Tile Max":"2910"}}
 ];
